@@ -1,0 +1,187 @@
+#####START_PREAMBLE_BLOCK##########|###########|###########|###########|                            
+Special runfile Reservoir_routing.wbn for flood routing a known hydrograph
+through a storage reservoir, ie dam with spillway, or flood detention basin.
+
+Change values ONLY in the OUTLET_STRUCTURES block and in the imported                            
+hydrograph section. Enter your inflow hydrograph as an IMPORTED hydrograph.
+Set sum_outlet_structures and out_metafile to TRUE. The former writes a                            
+summary of results to the screen. The latter writes hydrographs to an output                        
+file *_meta.out                            
+#####END_PREAMBLE_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_STATUS_BLOCK############|###########|###########|###########|                            
+C:\wbnm\Sample Runfiles\Reservoir_routing.wbn                                         
+last edited  1/ 1/2003                            
+by WBNM user                            
+2012_000    Unchecked_Edited_Model
+#####END_STATUS_BLOCK##############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_DISPLAY_BLOCK###########|###########|###########|###########|                                                        
+     2000.00    12000.00    18000.00     2000.00
+        none
+     2000.00    12000.00    18000.00     2000.00    18000.00    12000.00
+#####END_DISPLAY_BLOCK#############|###########|###########|###########|
+                                                                                
+                                                                                
+#####START_TOPOLOGY_BLOCK##########|###########|###########|###########|                                                        
+           1
+SUB1             5000.00     5600.00     5000.00     5600.00 SINK        
+#####END_TOPOLOGY_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_SURFACES_BLOCK##########|###########|###########|###########|                                                        
+        0.77
+      -99.90
+SUB1              100.00        0.00        1.70        0.10
+#####END_SURFACES_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_FLOWPATHS_BLOCK#########|###########|###########|###########|                                                        
+           1
+SUB1        
+#####DELAY  
+        0.00
+#####END_FLOWPATHS_BLOCK###########|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_LOCAL_STRUCTURES_BLOCK##|###########|###########|###########|                                                        
+           0
+#####END_LOCAL_STRUCTURES_BLOCK####|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_OUTLET_STRUCTURES_BLOCK#|###########|###########|###########|                                                        
+           1
+#####START_OUTLET_STRUCTURE#1
+USING WBNM FOR SIMPLE FLOOD ROUTING THROUGH A STORAGE RESERVOIR.
+SUB1        
+#####H_S
+#####START_OUTLET_DETAILS
+           3
+#####BOX
+      100.00
+           3
+           1
+     2400.00
+     1200.00
+        1.00 
+SINK        
+TOP    
+        0.00
+#####PIPE   
+      102.00
+           2
+           1
+     1800.00
+        1.00 
+SINK        
+TOP    
+        0.00
+#####WEIR   
+      105.00
+       12.00
+        1.80
+        1.00 
+SINK        
+TOP    
+        0.00
+#####END_OUTLET_DETAILS
+#####START_BASIN_DETAILS
+          12
+      100.00        0.00
+      100.50      100.00
+      101.00      200.00
+      101.50      300.00
+      102.00      400.00
+      102.50      500.00
+      103.00      600.00
+      103.50      700.00
+      104.00      800.00
+      104.50      900.00
+      105.00     1000.00
+      105.50     1100.00
+      100.00
+        0.00
+        1.00
+#####END_BASIN_DETAILS
+#####END_OUTLET_STRUCTURE#1
+#####END_OUTLET_STRUCTURES_BLOCK###|###########|###########|###########|
+                                                                                
+                                                                                
+#####START_STORM_BLOCK#############|###########|###########|###########|                                                        
+           1
+#####START_STORM#1
+THIS IS A DUMMY STORM. THIS RUNFILE IS USED SOLELY FOR STORAGE ROUTING OF AN INFLOW FLOOD HYDROGRAPH.
+       30.00
+       30.00
+#####START_RECORDED_RAIN
+01/01/2005  
+2115        
+           1       30.00
+MM/HOUR                
+           1
+RAIN GAUGE 1
+     8000.00     5500.00
+       30.00
+#####END_RECORDED_RAIN
+#####START_INPUT_RAINGAUGE_WEIGHTS
+SUB1                0.00
+#####END_INPUT_RAINGAUGE_WEIGHTS
+#####START_LOSS_RATES
+SUB1                0.00        0.00        0.00        
+#####END_LOSS_RATES
+#####START_RECORDED_HYDROGRAPHS
+           0
+#####END_RECORDED_HYDROGRAPHS
+#####START_IMPORTED_HYDROGRAPHS
+           1
+#####START_IMPORTED_HYDROGRAPH#1
+SUB1
+TOP
+          40       30.00
+DISCHARGE
+        0.00
+        2.00
+       13.00
+       25.00
+       48.00
+       62.00
+       65.00
+       72.00
+       75.00
+       68.00
+       66.00
+       64.00
+       60.00
+       55.00
+       50.00
+       47.00
+       43.00
+       39.00
+       36.00
+       32.00
+       30.00
+       27.00
+       25.00
+       23.00
+       21.00
+       19.00
+       17.00
+       15.00
+       13.00
+       11.00
+        9.00
+        7.00
+        6.00
+        5.00
+        4.00
+        3.00
+        2.00
+        1.00
+        1.00
+        0.00
+#####END_IMPORTED_HYDROGRAPH#1
+#####END_IMPORTED_HYDROGRAPHS
+#####END_STORM#1
+#####END_STORM_BLOCK###############|###########|###########|###########|

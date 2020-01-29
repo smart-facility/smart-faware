@@ -1,0 +1,167 @@
+#####START_PREAMBLE_BLOCK##########|###########|###########|###########|                            
+RUNFILE Storage_outlet_chnl.wbn                            
+An outlet structure (flood detention basin) is at the outlet of subarea 3.
+
+The culvert and weir dimensions are the same as in Storage_inletcontrol.wbn                            
+WBNM checks for both inlet and outlet control, and adopts the controlling case.                     
+Tailwater elevation in the downstream channel is set by a trapezoidal channel,                      
+base width 5.0 m, side slopes 0.2:1, bed slope 0.5%, Manning's n 0.05.                           
+NOTE: slightly difft answer to WBNM2000 V3.00, because Manning n=0.011 in pipes
+#####END_PREAMBLE_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_STATUS_BLOCK############|###########|###########|###########|                            
+C:\wbnm\Sample Runfiles\Storage_outlet_chnl.wbn                                            
+last edited  1/ 1/2003                            
+by WBNM user                            
+2017_000    Unchecked_Edited_Model
+#####END_STATUS_BLOCK##############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_DISPLAY_BLOCK###########|###########|###########|###########|                                                        
+     2000.00    12000.00    18000.00     2000.00
+        none
+     2000.00    12000.00    18000.00     2000.00    18000.00    12000.00
+#####END_DISPLAY_BLOCK#############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_TOPOLOGY_BLOCK##########|###########|###########|###########|                                                        
+           5
+SUB1             5000.00     5600.00     8000.00     7400.00 SUB3        
+SUB2             6000.00     9200.00     8000.00     7400.00 SUB3        
+SUB3             9000.00     7400.00    12000.00     6800.00 SUB5        
+SUB4            11000.00     9800.00    12000.00     6800.00 SUB5        
+SUB5            14000.00     5600.00    16000.00     4600.00 SINK        
+#####END_TOPOLOGY_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_SURFACES_BLOCK##########|###########|###########|###########|                                                        
+        0.77
+      -99.90
+SUB1             1200.00        0.00        1.70        0.10
+SUB2              600.00        0.00        1.70        0.10
+SUB3             1800.00        0.00        1.70        0.10
+SUB4             2400.00        0.00        1.70        0.10
+SUB5             1200.00        0.00        1.70        0.10
+#####END_SURFACES_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_FLOWPATHS_BLOCK#########|###########|###########|###########|                                                        
+           2
+SUB3        
+#####ROUTING
+        1.00
+SUB5        
+#####ROUTING
+        1.00
+#####END_FLOWPATHS_BLOCK###########|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_LOCAL_STRUCTURES_BLOCK##|###########|###########|###########|                                                        
+           0
+#####END_LOCAL_STRUCTURES_BLOCK####|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_OUTLET_STRUCTURES_BLOCK#|###########|###########|###########|                                                        
+           1
+#####START_OUTLET_STRUCTURE#1
+DETENTION BASIN AT OUTLET OF SUBAREA 3. OUTLET CONTROL IN CULVERTS, TAILWATER DEPTH CALCULATED USING MANNING IN LOWER CHANNEL
+SUB3        
+#####H_S(TWC)
+#####START_OUTLET_DETAILS
+           3
+#####BOX
+      100.00
+           3
+           1
+     2400.00
+     1200.00
+        0.50
+       50.00
+       99.50
+       0.011
+        1.00
+SUB5        
+TOP    
+        0.00
+#####PIPE   
+      102.00
+           2
+           1
+     1800.00
+        0.50
+       50.00
+      101.50
+       0.011
+        1.00 
+SUB5        
+TOP    
+        0.00
+#####WEIR   
+      105.00
+       12.00
+        1.80
+        1.00
+SINK        
+TOP    
+        0.00
+#####END_OUTLET_DETAILS
+#####START_TAILWATER_DETAILS
+        5.00
+        0.20
+        0.50
+        0.05
+       99.50
+#####END_TAILWATER_DETAILS
+#####START_BASIN_DETAILS
+          12
+      100.00        0.00
+      100.50      100.00
+      101.00      200.00
+      101.50      300.00
+      102.00      400.00
+      102.50      500.00
+      103.00      600.00
+      103.50      700.00
+      104.00      800.00
+      104.50      900.00
+      105.00     1000.00
+      105.50     1100.00
+      100.00
+        0.00
+        1.00
+#####END_BASIN_DETAILS
+#####END_OUTLET_STRUCTURE#1
+#####END_OUTLET_STRUCTURES_BLOCK###|###########|###########|###########|
+                                                                                
+                                                                                
+#####START_STORM_BLOCK#############|###########|###########|###########|                                                        
+           1
+#####START_STORM#1
+100 YEAR, 180 MINUTE DESIGN STORM FOR CANBERRA.
+       15.00
+       15.00
+#####START_DESIGN_RAIN_ARR1987
+         100         180        1.00
+IFD_COEFFS_IN_THIS_FILE
+           2
+GAUGE1                 1     W7892-1    15000.00     9000.00     1250.00       22.00        4.30        1.14       43.00        8.00        2.25        4.28       15.55        0.24     1100.00          25        0.63 Test IFD rainfall coeffs             
+GAUGE2                 1     W7892-1     7000.00     5000.00     1170.00       24.00        4.70        1.23       47.00        8.80        2.45        4.70       17.00        0.24     1060.00          25        0.63 Test IFD rainfall coeffs             
+#####END_DESIGN_RAIN_ARR1987
+#####START_CALC_RAINGAUGE_WEIGHTS
+#####END_CALC_RAINGAUGE_WEIGHTS
+#####START_LOSS_RATES
+SUB1                2.00        1.50        0.00        
+SUB2                2.00        1.50        0.00        
+SUB3                2.00        1.50        0.00        
+SUB4                2.00        1.50        0.00        
+SUB5                2.00        1.50        0.00        
+#####END_LOSS_RATES
+#####START_RECORDED_HYDROGRAPH
+           0
+#####END_RECORDED_HYDROGRAPH
+#####START_IMPORTED_HYDROGRAPH
+           0
+#####END_IMPORTED_HYDROGRAPH
+#####END_STORM#1
+#####END_STORM_BLOCK###############|###########|###########|###########|

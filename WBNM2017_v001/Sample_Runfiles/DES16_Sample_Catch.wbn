@@ -1,0 +1,100 @@
+#####START_PREAMBLE_BLOCK##########|###########|###########|###########|                                                        
+text line 1                                                                                                     
+text line 2   Whatever you like to describe model runfile                                                          
+text line 3                                                                                  
+text line 4                                                                                                     
+text line 5                                                             
+text line 6                                                                                                     
+text line 7                                                             
+text line 8                                                                                                    
+#####END_PREAMBLE_BLOCK############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_STATUS_BLOCK############|###########|###########|###########|                                                        
+text line 1      Whatever you like to describe model status                                                                
+text line 2                                                                                                          
+text line 3                                                                                                                  
+2017_000                     (model version)                                                                                         
+#####END_STATUS_BLOCK##############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_DISPLAY_BLOCK###########|###########|###########|###########|                                                        
+   542398.00  5276447.00   553393.00  5261203.00
+         none                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+   542398.00  5276447.00   553393.00  5261203.00   553393.00  5276447.00
+#####END_DISPLAY_BLOCK#############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_TOPOLOGY_BLOCK##########|###########|###########|###########|                                                        
+           5   Sorell Creek (part) - Sorell - Tasmania
+Sub01          547321.69  5275470.50   546096.69  5275432.50 Sub03       
+Sub02          546675.63  5274965.50   546096.69  5275432.50 Sub03       
+Sub03          546326.50  5274650.50   545613.69  5273980.00 Sub05       
+Sub04          545008.69  5274613.00   545613.69  5273980.00 Sub05       
+Sub05          546329.31  5272997.00   547226.88  5271831.50 SINK       
+ #####END_TOPOLOGY_BLOCK############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_SURFACES_BLOCK##########|###########|###########|###########|                                                        
+        0.77        1.50        0.10
+      -99.90
+Sub01             185.94        0.00 
+Sub02              57.69        0.00 
+Sub03             188.88        0.00 
+Sub04             169.12        0.00 
+Sub05             431.25        0.00 
+#####END_SURFACES_BLOCK############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_FLOWPATHS_BLOCK#########|###########|###########|###########|                                                        
+           2
+Sub03       
+#####ROUTING
+        1.00
+Sub05       
+#####ROUTING
+        1.00
+#####END_FLOWPATHS_BLOCK###########|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_LOCAL_STRUCTURES_BLOCK##|###########|###########|###########|                                                        
+           0
+#####END_LOCAL_STRUCTURES_BLOCK####|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_OUTLET_STRUCTURES_BLOCK#|###########|###########|###########|                                                        
+           0
+#####END_OUTLET_STRUCTURES_BLOCK###|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_STORM_BLOCK#############|###########|###########|###########|                                                        
+           1
+#####START_STORM#1
+1% AEP  Dura and Pattern Spectrum  - Losses calc - ARF calc                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1        -1.0
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           2
+SorellCkBot 
+SorellCkMid                                     
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+ARR16LOSSES 
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#1
+#####END_STORM_BLOCK###############|###########|###########|###########|

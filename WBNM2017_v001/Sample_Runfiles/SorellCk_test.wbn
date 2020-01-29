@@ -1,0 +1,499 @@
+#####START_PREAMBLE_BLOCK##########|###########|###########|###########|                                                        
+RUNFILE Sorell Rivulet.wbn                                                                                                      
+Part of ARR 2017 test suite to compare DFE between ARR 1987 and ARR 2017                                                             
+MOSTLY NATURAL CATCHMENT, 1% AEP DESIGN STORM                                                                                   
+3 design rain gauges, rainfall in mm/hour                                                                                
+Catchment Area 42km2                                                                                                            
+Catchment Shape 5.2  (L/W Significantly elongated)                                                                              
+Lightly forested headwaters - pasture centrally - urban bottom section                                                         
+Low avg annual rainfall area and low rainfall gradients                                                                                                   
+#####END_PREAMBLE_BLOCK############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_STATUS_BLOCK############|###########|###########|###########|                                                        
+Z:\Projects\2016\16008-01 Sorell Rivulet\SorellRivulet.wbn                                                                      
+last edited  16/1/2017                                                                                                          
+by  Ted Rigby                                                                                                                   
+2017_000    Test Model                                                                                                          
+#####END_STATUS_BLOCK##############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_DISPLAY_BLOCK###########|###########|###########|###########|                                                        
+   542398.00  5276447.00   553393.00  5261203.00
+         none                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+   542398.00  5276447.00   553393.00  5261203.00   553393.00  5276447.00
+#####END_DISPLAY_BLOCK#############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_TOPOLOGY_BLOCK##########|###########|###########|###########|                                                        
+          17   Sorell Creek - Sorell - Tasmania
+Sub01          547321.69  5275470.50   546096.69  5275432.50 Sub03       
+Sub02          546675.63  5274965.50   546096.69  5275432.50 Sub03       
+Sub03          546326.50  5274650.50   545613.69  5273980.00 Sub05       
+Sub04          545008.69  5274613.00   545613.69  5273980.00 Sub05       
+Sub05          546329.31  5272997.00   547226.88  5271831.50 Sub06       
+Sub06          548280.69  5271825.00   548362.38  5269720.50 Sub10       
+Sub07          550876.69  5270553.50   549159.12  5269825.00 Sub09       
+Sub08          550330.88  5269438.50   549159.12  5269825.00 Sub09       
+Sub09          548877.63  5269848.00   548362.38  5269720.50 Sub10       
+Sub10          548053.00  5268587.00   547144.00  5267301.00 Sub11       
+Sub11          547702.13  5266491.50   547345.81  5265751.00 Sub12       
+Sub12          547006.00  5265034.00   546624.88  5263995.50 Sub13       
+Sub13          546587.31  5263811.00   546657.31  5263519.50 Sub15       
+Sub14          547155.50  5263761.00   546657.31  5263519.50 Sub15       
+Sub15          546476.31  5263554.50   546423.00  5263242.00 Sub16       
+Sub16          546670.69  5263039.50   546145.38  5262837.50 Sub17       
+Sub17          546329.00  5262333.00   546008.38  5261669.50 SINK        
+#####END_TOPOLOGY_BLOCK############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_SURFACES_BLOCK##########|###########|###########|###########|                                                        
+        0.77         1.3        0.10
+      -99.90
+Sub01             185.94        0.00  
+Sub02              57.69        0.00  
+Sub03             188.88        0.00  
+Sub04             169.12        0.00  
+Sub05             431.25        0.00  
+Sub06             859.29        0.00  
+Sub07             387.83        0.00  
+Sub08             209.59        2.00  
+Sub09              31.02        5.00  
+Sub10             762.62        2.00  
+Sub11             311.87        2.00  
+Sub12             316.64        5.00  
+Sub13              19.12        8.00  
+Sub14              45.48        5.00  
+Sub15              34.63       20.00  
+Sub16              54.27       15.00  
+Sub17             132.83       15.00  
+#####END_SURFACES_BLOCK############|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_FLOWPATHS_BLOCK#########|###########|###########|###########|                                                        
+          11
+Sub03       
+#####ROUTING
+        1.00
+Sub05       
+#####ROUTING
+        1.00
+Sub06       
+#####ROUTING
+        1.00
+Sub09       
+#####ROUTING
+        1.00
+Sub10       
+#####ROUTING
+        1.00
+Sub11       
+#####ROUTING
+        1.00
+Sub12       
+#####ROUTING
+        1.00
+Sub13       
+#####ROUTING
+        1.00
+Sub15       
+#####ROUTING
+        1.00
+Sub16       
+#####ROUTING
+        1.00
+Sub17       
+#####ROUTING
+        1.00
+#####END_FLOWPATHS_BLOCK###########|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_LOCAL_STRUCTURES_BLOCK##|###########|###########|###########|                                                        
+           0
+#####END_LOCAL_STRUCTURES_BLOCK####|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_OUTLET_STRUCTURES_BLOCK#|###########|###########|###########|                                                        
+           0
+#####END_OUTLET_STRUCTURES_BLOCK###|###########|###########|###########|                                                        
+                                                                                                                                 
+                                                                                                                                 
+#####START_STORM_BLOCK#############|###########|###########|###########|                                                        
+          12
+#####START_STORM#1  
+100Yr ARI dura spectrum -IFD in runfile - losses 36/4.0 - ARF 1.0                                                            
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR1987                  
+         100          -1         1.0
+IFD_COEFFS_IN_THIS_FILE     
+           3
+SorellRivBot           1     xxxxxxx   545841.00  5261381.00       10.00       15.01        3.59        1.00       26.48        6.80        2.70        3.86       15.47        0.27      500.00          25        0.63   xxxx
+SorellRivMid           1     xxxxxxx   548877.63  5269848.00       90.00       15.82        4.36        1.22       27.39        8.37        2.70        3.87       15.49        0.27      500.00          25        0.63   xxxx                                     
+SorellRivTop           1     xxxxxxx   545888.00  5276088.00      500.00       15.68        4.00        1.12       27.15        8.37        2.70        3.88       15.46        0.28      500.00          25        0.63   xxxx
+#####END_DESIGN_RAIN_ARR1987            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+Sub01              36.00        4.00        1.00
+Sub02              36.00        4.00        1.00
+Sub03              36.00        4.00        1.00
+Sub04              36.00        4.00        1.00
+Sub05              36.00        4.00        1.00
+Sub06              36.00        4.00        1.00
+Sub07              36.00        4.00        1.00
+Sub08              36.00        4.00        1.00
+Sub09              36.00        4.00        1.00
+Sub10              36.00        4.00        1.00
+Sub11              36.00        4.00        1.00
+Sub12              36.00        4.00        1.00
+Sub13              36.00        4.00        1.00
+Sub14              36.00        4.00        1.00
+Sub15              36.00        4.00        1.00
+Sub16              36.00        4.00        1.00
+Sub17              36.00        4.00        1.00
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#1
+#####START_STORM#2  
+100Yr ARI Crit Dura check - IFD in runfile - losses 36/4.0 - ARF 1.0                                                             
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR1987                  
+         100        720         1.0
+IFD_COEFFS_IN_THIS_FILE     
+           3
+SorellRivBot           1     xxxxxxx   545841.00  5261381.00       10.00       15.01        3.59        1.00       26.48        6.80        2.70        3.86       15.47        0.27      500.00          25        0.63   xxxx
+SorellRivMid           1     xxxxxxx   548877.63  5269848.00       90.00       15.82        4.36        1.22       27.39        8.37        2.70        3.87       15.49        0.27      500.00          25        0.63   xxxx                                     
+SorellRivTop           1     xxxxxxx   545888.00  5276088.00      500.00       15.68        4.00        1.12       27.15        8.37        2.70        3.88       15.46        0.28      500.00          25        0.63   xxxx
+#####END_DESIGN_RAIN_ARR1987            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+Sub01              36.00        4.00        1.00
+Sub02              36.00        4.00        1.00
+Sub03              36.00        4.00        1.00
+Sub04              36.00        4.00        1.00
+Sub05              36.00        4.00        1.00
+Sub06              36.00        4.00        1.00
+Sub07              36.00        4.00        1.00
+Sub08              36.00        4.00        1.00
+Sub09              36.00        4.00        1.00
+Sub10              36.00        4.00        1.00
+Sub11              36.00        4.00        1.00
+Sub12              36.00        4.00        1.00
+Sub13              36.00        4.00        1.00
+Sub14              36.00        4.00        1.00
+Sub15              36.00        4.00        1.00
+Sub16              36.00        4.00        1.00
+Sub17              36.00        4.00        1.00
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#2
+#####START_STORM#3  
+100Yr ARI Dura Spectrum - IFD in runfile - GLOBAL 36/4 losses - ARF 1.0                                                           
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR1987                  
+         100         -1          1.0
+IFD_COEFFS_IN_THIS_FILE     
+           3
+SorellRivBot           1     xxxxxxx   545841.00  5261381.00       10.00       15.01        3.59        1.00       26.48        6.80        2.70        3.86       15.47        0.27      500.00          25        0.63   xxxx
+SorellRivMid           1     xxxxxxx   548877.63  5269848.00       90.00       15.82        4.36        1.22       27.39        8.37        2.70        3.87       15.49        0.27      500.00          25        0.63   xxxx                                     
+SorellRivTop           1     xxxxxxx   545888.00  5276088.00      500.00       15.68        4.00        1.12       27.15        8.37        2.70        3.88       15.46        0.28      500.00          25        0.63   xxxx
+#####END_DESIGN_RAIN_ARR1987            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+GLOBAL             36.00        4.00        1.00
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#3
+#####START_STORM#4  
+100Yr ARI Dura Spectrum - IFD in runfile - GLOBAL 36/4 losses - ARF calc                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR1987                  
+         100         -1         -1.0
+IFD_COEFFS_IN_THIS_FILE     
+           3
+SorellRivBot           1     xxxxxxx   545841.00  5261381.00       10.00       15.01        3.59        1.00       26.48        6.80        2.70        3.86       15.47        0.27      500.00          25        0.63   xxxx
+SorellRivMid           1     xxxxxxx   548877.63  5269848.00       90.00       15.82        4.36        1.22       27.39        8.37        2.70        3.87       15.49        0.27      500.00          25        0.63   xxxx                                     
+SorellRivTop           1     xxxxxxx   545888.00  5276088.00      500.00       15.68        4.00        1.12       27.15        8.37        2.70        3.88       15.46        0.28      500.00          25        0.63   xxxx
+#####END_DESIGN_RAIN_ARR1987            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+GLOBAL             36.00        4.00        1.00
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#4
+#####START_STORM#5 
+1%AEP dura/patt spectrum  - losses 36/4 GLOBAL - ARF=1.0                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1         1.0
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+GLOBAL              36.0         4.0         0.0
+ #####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#5
+#####START_STORM#6 
+1%AEP crit Dura and Pattern check - Losses 36/4 GLOBAL - ARF 1.0                                                         
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0         720           5         1.0
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+GLOBAL              36.0         4.0         1.0
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#6
+#####START_STORM#7 
+1%AEP Dura and Pattern Spectrum - Losses 36/4 GLOBAL - ARF calc                                                         
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1          -1
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+GLOBAL              36.0         4.0         1.0
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#7
+#####START_STORM#8 
+1%AEP crit Dura and Pattern checkm - Losses 36/4 GLOBAL - ARF calc                                                         
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0         720           5          -1
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+GLOBAL              36.0         4.0         1.0
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#8
+#####START_STORM#9  
+1% AEP dura/patt Spectrum - spatial losses 36/4.0 - ARF 1.0                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1         1.0
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+Sub01              36.00        4.00        1.00
+Sub02              36.00        4.00        1.00
+Sub03              36.00        4.00        1.00
+Sub04              36.00        4.00        1.00
+Sub05              36.00        4.00        1.00
+Sub06              36.00        4.00        1.00
+Sub07              36.00        4.00        1.00
+Sub08              36.00        4.00        1.00
+Sub09              36.00        4.00        1.00
+Sub10              36.00        4.00        1.00
+Sub11              36.00        4.00        1.00
+Sub12              36.00        4.00        1.00
+Sub13              36.00        4.00        1.00
+Sub14              36.00        4.00        1.00
+Sub15              36.00        4.00        1.00
+Sub16              36.00        4.00        1.00
+Sub17              36.00        4.00        1.00
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS  
+#####END_STORM#9  
+#####START_STORM#10 
+1% AEP  Dura and Pattern Spectrum  - Losses calc - ARF calc                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1        -1.0
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+ARR16LOSSES 
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#10
+#####START_STORM#11 
+1%AEP Dura and Pattern Spectrum - Losses calc - ARF calc - PAC at Sub14                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1       -1.0    Sub14
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+ARR16LOSSES 
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#11
+####START_STORM#12 
+1%AEP Dura and Pattern Spectrum - Losses calc - ARF calc - PAC at Sub06                                                          
+        5.00
+        5.00
+#####START_DESIGN_RAIN_ARR2016                  
+         1.0          -1          -1       -1.0    Sub06
+IFD_DATA_IN_DATABASE_FILE
+Tasmanian_Rainfall_IFDdatabase.csv    
+           3
+SorellCkBot 
+SorellCkMid                                     
+SorellCkTop
+PAT_DATA_IN_REGION_FILE
+Southern_Slopes_Tasmania_Increments.csv
+CAT_DATA_IN_CATCHMENT_FILE
+SorellCk_Catchment.txt  
+#####END_DESIGN_RAIN_ARR2016            
+#####START_CALC_RAINGAUGE_WEIGHTS 
+#####END_CALC_RAINGAUGE_WEIGHTS                                                                                                 
+#####START_LOSS_RATES           
+ARR16LOSSES 
+#####END_LOSS_RATES                                                                                                            
+#####START_RECORDED_HYDROGRAPHS                                                                                                 
+           0
+#####END_RECORDED_HYDROGRAPHS                                                                                                   
+#####START_IMPORTED_HYDROGRAPHS                                                                                                 
+           0
+#####END_IMPORTED_HYDROGRAPHS                                                                                                   
+#####END_STORM#12
+#####END_STORM_BLOCK###############|###########|###########|###########|

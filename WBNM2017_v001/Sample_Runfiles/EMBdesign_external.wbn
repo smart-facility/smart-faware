@@ -1,0 +1,100 @@
+#####START_PREAMBLE_BLOCK##########|###########|###########|###########|                            
+RUNFILE Design_external.wbn
+                            
+Design storm with IFD coefficients in a separate IFD rainfall file.                            
+This is the same data as in Embedded_design.wbn                            
+                            
+The IFD file (WBNM.IFD) is named in this runfile.                        
+When running, WBNM opens this IFD file and searches for the rainfall                        
+IFD coefficients for the 2 named rain gauge stations (GAUGE1 and GAUGE2)                            
+#####END_PREAMBLE_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_STATUS_BLOCK############|###########|###########|###########|                            
+C:\WBNM\Sample Runfiles\Design_external.wbn                                            
+last edited  1/ 1/2003                            
+by WBNM user                            
+2012_000    Unchecked_Edited_Model
+#####END_STATUS_BLOCK##############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_DISPLAY_BLOCK###########|###########|###########|###########|                                                        
+     2000.00    12000.00    18000.00     2000.00
+        none
+     2000.00    12000.00    18000.00     2000.00    18000.00    12000.00
+#####END_DISPLAY_BLOCK#############|###########|###########|###########|
+                                                                                
+                                                                                
+#####START_TOPOLOGY_BLOCK##########|###########|###########|###########|                                                        
+           5
+SUB1             5000.00     5600.00     8000.00     7400.00 SUB3        
+SUB2             6000.00     9200.00     8000.00     7400.00 SUB3        
+SUB3             9000.00     7400.00    12000.00     6800.00 SUB5        
+SUB4            11000.00     9800.00    12000.00     6800.00 SUB5        
+SUB5            14000.00     5600.00    16000.00     4600.00 SINK        
+#####END_TOPOLOGY_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_SURFACES_BLOCK##########|###########|###########|###########|                                                        
+        0.77
+      -99.90
+SUB1             1200.00        0.00        1.70        0.10
+SUB2              600.00        0.00        1.70        0.10
+SUB3             1800.00        0.00        1.70        0.10
+SUB4             2400.00        0.00        1.70        0.10
+SUB5             1200.00        0.00        1.70        0.10
+#####END_SURFACES_BLOCK############|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_FLOWPATHS_BLOCK#########|###########|###########|###########|                                                        
+           2
+SUB3        
+#####ROUTING
+        1.00
+SUB5        
+#####ROUTING
+        1.00
+#####END_FLOWPATHS_BLOCK###########|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_LOCAL_STRUCTURES_BLOCK##|###########|###########|###########|                                                        
+           0
+#####END_LOCAL_STRUCTURES_BLOCK####|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_OUTLET_STRUCTURES_BLOCK#|###########|###########|###########|                                                        
+           0
+#####END_OUTLET_STRUCTURES_BLOCK###|###########|###########|###########|                                                        
+                                                                                
+                                                                                
+#####START_STORM_BLOCK#############|###########|###########|###########|                                                        
+           1
+#####START_STORM#1
+EMBEDDED DESIGN STORM, WITH IFD COEFFICIENTS LOCATED IN AN EXTERNAL FILE, WBNM.IFD. 
+        5.00
+        5.00
+#####START_EMBEDDED_DESIGN_RAIN_ARR1987
+         100         120         100         540        1.00
+IFD_COEFFS_IN_IFD_FILE 
+WBNM.IFD
+           2
+GAUGE1      
+GAUGE2      
+#####END_EMBEDDED_DESIGN_RAIN_ARR1987
+#####START_CALC_RAINGAUGE_WEIGHTS
+#####END_CALC_RAINGAUGE_WEIGHTS
+#####START_LOSS_RATES
+SUB1                2.00        1.50        0.00        
+SUB2                2.00        1.50        0.00        
+SUB3                2.00        1.50        0.00        
+SUB4                2.00        1.50        0.00        
+SUB5                2.00        1.50        0.00        
+#####END_LOSS_RATES
+#####START_RECORDED_HYDROGRAPHS
+           0
+#####END_RECORDED_HYDROGRAPHS
+#####START_IMPORTED_HYDROGRAPHS
+           0
+#####END_IMPORTED_HYDROGRAPHS
+#####END_STORM#1
+#####END_STORM_BLOCK###############|###########|###########|###########|

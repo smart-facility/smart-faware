@@ -1,0 +1,3 @@
+The catchment_fairy_meadow shapefile represente the 47 subcatchment of the fairy meadow and cabbage creek catchment.
+The nodes_points_catchment shapefile represente the location of flow between two subcatchments (not implemented yet in the model).
+ 
