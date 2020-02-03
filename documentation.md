@@ -1,0 +1,3 @@
+# FLOODAWARE GAMA MODEL DOCUMENTATION
+# OVERVIEW
+The GAMA model is split into n main parts....

@@ -1,0 +1,92 @@
+/***
+* Name: Discrete
+* Author: nhutchis
+* Description: 
+* Tags: discrete
+***/
+
+model Discrete
+
+/* Insert your model definition here */
+
+global {
+	file catchments_shape <- file("../../../data/gis/catchment_shape.shp");
+	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
+	file elevation_tif <- file("../../../data/gis/elevation_grid.tif");
+	file rain_tif <-file("../../../data/gis/rain_grid.tif");
+	file rain_csv <- file("../../../data/rain/rainfield_woll.csv");
+	
+	geometry shape <- envelope(rain_tif); //could be dem_grid or rain_grid depending on what Anton says about resolution etc
+	
+	
+	bool parallel <- true; //check if this is necessary later
+	
+	int end_precipitation; //better name, just used to cut off precip calculations when there is no rain
+	
+	float step <- 5#mn;
+	float resolution <- 10#mn; //ask Anton, is this just for landunits, etc?
+	
+	float infil_constant <- 5#mm; //better name, double check for certainty
+	float infil_proportionate <- 0.1;
+	float LAG_C <- 1.61;
+	float LAG_IMPERV <- 0.1;
+	float LAG_STREAM <- 1.0;
+	
+	//come up with some better names for these, check usage a bit more
+	list<float> hydro;
+	list<float> total_volume_global;
+	float global_volume;
+	
+	action init_rain_cells {
+		matrix rain <- matrix(rain_csv);
+		loop id from: 0 to: rain.rows-1 {
+			ask rain_cell{
+				if (name contains string(id)) {
+					write(name);
+				}
+			}
+		}
+	}
+	
+		
+	init{
+		//create catchments from shapefile
+		loop cat over: catchments_shape {
+			create catchment from: [cat] {
+				downstream <- cat get "DOWNSTREAM";
+			}
+		}
+		
+		do init_rain_cells;
+	}
+		
+}
+	
+
+
+species catchment {
+	int ID;
+	int num_cells;
+	int num_cells_impervious <- 0;
+	string downstream;
+	
+	rgb colour <- #white;
+	
+	aspect base {
+		draw shape color: colour border: #black width: 2.0;
+	}
+}
+
+grid rain_cell file: rain_tif {
+	list<float> precipitation_each_step;
+}
+
+experiment Run type: gui {
+	parameter "Rain data CSV" var: rain_csv category: "Inputs";
+	output {
+		display main type: opengl {
+			grid rain_cell lines: #black;
+			species catchment aspect: base;
+		}
+	}
+}

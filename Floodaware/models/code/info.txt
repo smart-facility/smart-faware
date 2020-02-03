@@ -1,2 +1,0 @@
-the semi_continous model are fully commented.
-The discrete model aren't fully commented
