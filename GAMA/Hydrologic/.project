@@ -15,4 +15,11 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>msi.gama.application.gamaNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>external/rainfield_woll.csv</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/Floodaware/smart-faware/data/rain/rainfield_woll.csv</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -1,11 +1,11 @@
-!SESSION 2020-02-03 12:43:38.824 -----------------------------------------------
+!SESSION 2020-02-04 13:34:56.857 -----------------------------------------------
 eclipse.buildId=${build.id}
 java.version=1.8.0_171
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_AU
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data @noDefault
 
-!ENTRY org.eclipse.e4.ui.workbench.swt 4 2 2020-02-03 12:43:46.227
+!ENTRY org.eclipse.e4.ui.workbench.swt 4 2 2020-02-04 13:35:04.458
 !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.e4.ui.workbench.swt".
 !STACK 0
 java.lang.NullPointerException
@@ -58,8 +58,8 @@ java.lang.NullPointerException
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1476)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1449)
 
-!ENTRY org.eclipse.e4.ui.workbench 4 0 2020-02-03 12:43:46.232
-!MESSAGE Exception occurred while rendering: org.eclipse.ui.ide.perspectivestack=org.eclipse.e4.ui.model.application.ui.advanced.impl.PerspectiveStackImpl@4877919f (tags: [], contributorURI: null) (widget: Composite {}, renderer: org.eclipse.e4.ui.workbench.renderers.swt.PerspectiveStackRenderer@3c07e830, toBeRendered: true, onTop: false, visible: true, containerData: 7500, accessibilityPhrase: null)
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2020-02-04 13:35:04.463
+!MESSAGE Exception occurred while rendering: org.eclipse.ui.ide.perspectivestack=org.eclipse.e4.ui.model.application.ui.advanced.impl.PerspectiveStackImpl@6f9ab79d (tags: [], contributorURI: null) (widget: Composite {}, renderer: org.eclipse.e4.ui.workbench.renderers.swt.PerspectiveStackRenderer@47be41c6, toBeRendered: true, onTop: false, visible: true, containerData: 7500, accessibilityPhrase: null)
 !STACK 0
 java.lang.NullPointerException
 	at org.eclipse.e4.ui.workbench.renderers.swt.LazyStackRenderer.showTab(LazyStackRenderer.java:166)
@@ -110,14 +110,12 @@ java.lang.NullPointerException
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:597)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1476)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1449)
-!SESSION 2020-02-03 11:11:32.059 -----------------------------------------------
-eclipse.buildId=${build.id}
-java.version=1.8.0_171
-java.vendor=Oracle Corporation
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_AU
-Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data @noDefault
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 12:48:28.965
+!ENTRY org.apache.log4j 4 0 2020-02-04 13:52:31.162
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.VarDefinitionImpl is not assignable to the reference TypeRef.ref
+
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 13:57:42.411
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -138,10 +136,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 12:48:28.967
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 13:57:42.411
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -151,7 +149,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 12:57:53.360
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 14:18:17.936
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -172,10 +170,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 12:57:53.361
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 14:18:17.936
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -185,7 +183,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 13:07:45.926
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 14:23:23.413
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -206,10 +204,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 13:07:45.928
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 14:23:23.413
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -219,7 +217,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 13:17:49.257
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 14:29:11.123
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -240,10 +238,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 13:17:49.259
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 14:29:11.123
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -253,7 +251,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 13:35:40.577
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 14:35:07.229
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -274,10 +272,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 13:35:40.578
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 14:35:07.244
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -287,7 +285,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 13:43:57.688
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 14:40:12.363
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -308,10 +306,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 13:43:57.704
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 14:40:12.378
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -321,7 +319,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 13:50:51.293
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 14:45:22.919
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -342,10 +340,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 13:50:51.293
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 14:45:22.919
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -355,7 +353,19 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 13:57:07.302
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:14:02.104
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:14:58.793
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.VarDefinitionImpl is not assignable to the reference TypeRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:15:09.979
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.VarDefinitionImpl is not assignable to the reference TypeRef.ref
+
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 15:18:33.434
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -376,10 +386,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 13:57:07.318
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 15:18:33.434
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -389,7 +399,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 14:05:09.768
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 15:27:32.631
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -410,10 +420,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 14:05:09.768
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 15:27:32.631
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -423,7 +433,43 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 14:10:44.014
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.apache.log4j 4 0 2020-02-04 15:34:05.515
+!MESSAGE org.eclipse.xtext.linking.lazy.LazyLinkingResource  - An element of type msi.gama.lang.gaml.gaml.impl.TypeDefinitionImpl is not assignable to the reference VariableRef.ref
+
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 15:34:19.856
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -444,10 +490,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 14:10:44.016
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 15:34:19.856
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -457,7 +503,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 14:34:32.081
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 15:40:18.786
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -478,10 +524,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 14:34:32.081
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 15:40:18.786
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -491,7 +537,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 14:39:47.377
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 15:45:50.468
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -512,10 +558,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 14:39:47.377
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 15:45:50.468
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -525,7 +571,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 15:44:11.128
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 16:06:13.821
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -546,10 +592,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 15:44:11.128
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 16:06:13.821
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -559,7 +605,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 15:50:56.749
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 16:11:27.439
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -580,10 +626,10 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 15:50:56.765
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 16:11:27.439
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
@@ -593,7 +639,7 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.resources 4 0 2020-02-03 16:02:55.897
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 16:16:40.801
 !MESSAGE Error occurred while reading master table file
 !STACK 0
 java.nio.charset.UnmappableCharacterException: Input length = 1
@@ -614,10 +660,146 @@ java.nio.charset.UnmappableCharacterException: Input length = 1
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.core.jobs 4 2 2020-02-03 16:02:55.897
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 16:16:40.803
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
-java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 9, new: 8). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 16:22:55.545
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.UnmappableCharacterException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:282)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.io.BufferedReader.readLine(BufferedReader.java:324)
+	at java.io.BufferedReader.readLine(BufferedReader.java:389)
+	at java.nio.file.Files.readAllLines(Files.java:3205)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1618)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1599)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 16:22:55.545
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 17:26:36.981
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.UnmappableCharacterException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:282)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.io.BufferedReader.readLine(BufferedReader.java:324)
+	at java.io.BufferedReader.readLine(BufferedReader.java:389)
+	at java.nio.file.Files.readAllLines(Files.java:3205)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1618)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1599)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 17:26:36.981
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 17:37:37.088
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.UnmappableCharacterException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:282)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.io.BufferedReader.readLine(BufferedReader.java:324)
+	at java.io.BufferedReader.readLine(BufferedReader.java:389)
+	at java.nio.file.Files.readAllLines(Files.java:3205)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1618)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1599)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 17:37:37.088
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 0 2020-02-04 17:44:05.008
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.UnmappableCharacterException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:282)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.io.BufferedReader.readLine(BufferedReader.java:324)
+	at java.io.BufferedReader.readLine(BufferedReader.java:389)
+	at java.nio.file.Files.readAllLines(Files.java:3205)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1618)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1599)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1263)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1240)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1151)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2020-02-04 17:44:05.024
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 13, new: 12). Location: C:\Users\nhutchis\Documents\Projects\Floodaware\smart-faware\GAMA\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
 	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
 	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1600)
 	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1271)
