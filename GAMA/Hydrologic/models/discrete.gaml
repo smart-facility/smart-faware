@@ -12,9 +12,9 @@ model Discrete
 global {
 	file catchments_shape <- file("../../../data/gis/catchment_shape.shp");
 	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
-	file elevation_tif <- file("../../../data/gis/elevation_downsample.tif");
+	file elevation_tif <- file("../../../data/gis/elevation_grid.tif");
 	file rain_tif <-file("../../../data/gis/rain_grid.tif");
-	file rain_csv <- file("../../../data/gong_csv.csv");
+	file rain_csv <- file("../../../data/rain/test.csv");
 	
 	float max_rain;
 	
@@ -205,7 +205,19 @@ species catchment {
 	
 	rgb colour <- #white;
 	
+	rgb update_colour {
+		/*
+		 * optimise colour selection, likely dependent on the quality of the water
+		 * transition/lag functionality.
+		 */
+		float total_volume <- runoff_pervious + runoff_impervious + runoff_channel;
+		int val_water <- int(255*(total_volume/(num_cells*resolution^2)*200));
+		colour <- rgb([255-val_water, 255-val_water, 255]);
+		return colour;
+	}
+	
 	aspect default {
+		colour <- update_colour();
 		draw shape color: colour border: #black width: 2.0;
 	}
 }
@@ -218,6 +230,10 @@ species water {
 	float amount;
 	reflex deposit when: lag < (time + step) {
 		/*
+		 * introduce code to create a smooth flow from catchment to catchment
+		 * potentially by subtracting amounts every tick until amount empty
+		 * have an extra set of variables just for display/record purposes
+		 * which are updated smoothly
 		switch type {
 			match "perv" { from.runoff_pervious <- from.runoff_pervious - amount; }
 			match "imperv" { from.runoff_impervious <- from.runoff_impervious - amount; }
@@ -240,11 +256,13 @@ experiment Visualise type: gui {
 			species land_cell position: {0, 0, 0.15} transparency: 0.4;
 			species rain_cell position: {0, 0, 0.4} transparency: 0.6;
 		}
-		/*
-		display charts {
-			chart "out catchment" type: series { data "total volume" value: catchment[36].runoff_channel color: #green; }
+		
+		display charts refresh: every(1#cycles) {
+			chart "out catchment" type: series { 
+				data "total volume" value: catchment[36].runoff_channel + catchment[36].runoff_pervious + catchment[36].runoff_impervious color: #green;
+			}
 		}
-		*/	
+		
 	}
 }
 
