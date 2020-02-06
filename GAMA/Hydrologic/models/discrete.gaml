@@ -14,7 +14,7 @@ global {
 	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
 	file elevation_tif <- file("../../../data/gis/elevation_grid.tif");
 	file rain_tif <-file("../../../data/gis/rain_grid.tif");
-	file rain_csv <- file("../../../data/rain/test.csv");
+	file rain_csv <- file("../../../data/rain/gong_csv.csv");
 	
 	float max_rain;
 	

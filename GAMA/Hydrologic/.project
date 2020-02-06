@@ -17,6 +17,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>external/6th.csv</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/rain/6th.csv</location>
+		</link>
+		<link>
+			<name>external/8th.csv</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/rain/8th.csv</location>
+		</link>
+		<link>
 			<name>external/rainfield_woll.csv</name>
 			<type>1</type>
 			<location>C:/Users/nhutchis/Documents/Projects/Floodaware/smart-faware/data/rain/rainfield_woll.csv</location>
