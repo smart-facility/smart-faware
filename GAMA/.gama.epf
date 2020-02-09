@@ -1,4 +1,4 @@
-#Thu Feb 06 14:37:47 AEDT 2020
+#Mon Feb 10 09:27:50 AEDT 2020
 \!/=
 /instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 /instance/org.eclipse.core.resources/pathvariable.CACHE_LOC=C\:/Users/nhutchis/Documents/Projects/smart-faware/GAMA/.cache
@@ -8,6 +8,7 @@
 /instance/org.eclipse.ui.ide/EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false
 /instance/org.eclipse.ui.ide/PROBLEMS_FILTERS_MIGRATE=true
 /instance/org.eclipse.ui.ide/platformState=1580942011168
+/instance/org.eclipse.ui.workbench//org.eclipse.ui.commands/state/org.eclipse.ui.navigator.resources.nested.changeProjectPresentation/org.eclipse.ui.commands.radioState=false
 /instance/org.eclipse.ui.workbench/ENABLED_DECORATORS=org.eclipse.ui.LinkedResourceDecorator\:false,org.eclipse.ui.SymlinkDecorator\:true,org.eclipse.ui.VirtualResourceDecorator\:false,org.eclipse.ui.ContentTypeDecorator\:true,org.eclipse.ui.ResourceFilterDecorator\:false,msi.gama.application.decorator\:true,msi.gama.application.date.decorator\:false,msi.gama.light.decorator\:true,
 /instance/org.eclipse.ui.workbench/UIActivities.disabled2=true
 /instance/org.eclipse.ui.workbench/UIActivities.org.eclipse.xtext.ui=false

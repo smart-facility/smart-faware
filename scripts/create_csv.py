@@ -4,7 +4,7 @@ import gdal
 import csv
 import sys, os
 import re
-
+gdal.PushErrorHandler('CPLQuietErrorHandler')
 '''add option to give filename or path to 
 create csv file
 
@@ -33,7 +33,6 @@ def load_nc(file):
             sys.stderr = sys.stdout
         except:
             print("Error reading data")
-            print("##BIG WOOPSY##")
             return "error"
         
         array_now = np.reshape(array_now, (10, 74, 512, 512))
@@ -87,7 +86,7 @@ def write_csv(array, name):
 #%%
 file_in = sys.argv[1]
 file_out = sys.argv[2]
-
+#%%
 '''
 root = os.path.realpath(__file__+"/../..")
 sys.path.append(root)

@@ -69,6 +69,7 @@ global {
 		
 		//initialise each rain cell with its precipitation per step		
 		matrix rain <- matrix(rain_csv);
+		end_precipitation <- rain.columns-4;
 		loop id from: 0 to: rain.rows-1 {
 			ask rain_cell{
 				if (string(id) = replace(name, "rain_cell", "")) {
@@ -88,6 +89,12 @@ global {
 			}
 		}
 		
+	}
+	
+	reflex stop_rain when: cycle = end_precipitation {
+		ask rain_cell {
+			do die;
+		}
 	}
 		
 }
