@@ -30,14 +30,7 @@ global {
 	float LAG_C <- 1.61;
 	float LAG_IMPERV <- 0.1;
 	float LAG_STREAM <- 1.0;
-	
-	//come up with some better names for these, check usage a bit more
-	list<float> hydro;
-	list<float> total_volume_global;
-	float global_volume;
-	
-	
-		
+			
 	init{
 		//create low level catchments from shape file, these catchments are used to perform flow calculations and transmit water
 		loop cat over: catchments_shape {
