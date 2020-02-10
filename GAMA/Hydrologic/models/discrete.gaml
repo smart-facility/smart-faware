@@ -19,13 +19,10 @@ global {
 	float max_rain;
 	
 	geometry shape <- envelope(rain_tif); //could be dem_grid or rain_grid depending on what Anton says about resolution etc
+		
+	int end_precipitation; //after this step kills all rain cells to prevent indexing error
 	
-	
-	bool parallel <- true; //check if this is necessary later
-	
-	int end_precipitation; //better name, just used to cut off precip calculations when there is no rain
-	
-	float step <- 10#mn/74;
+	float step <- 10#mn/74; //step sized determined from netCDF file, files last 10 minutes with 74 steps
 	float resolution <- 10#m; //update to grab from the selected tif
 	
 	float infil_constant <- 5#mm; //better name, double check for certainty
@@ -42,7 +39,7 @@ global {
 	
 		
 	init{
-		//create catchments from shape file
+		//create low level catchments from shape file, these catchments are used to perform flow calculations and transmit water
 		loop cat over: catchments_shape {
 			create catchment from: [cat] {
 				downstream <- int(cat get "DOWNSTREAM")-1;
@@ -50,7 +47,7 @@ global {
 			}
 		}
 			
-		//initialise land cells from elevation geotif
+		//initialise land cells from elevation geotif, all cells which are not connected to a catchment are useless and hence removed
 		ask land_cell {
 			ask catchment overlapping location {
 				myself.catchment_connected <- myself.catchment_connected + self;
@@ -58,7 +55,7 @@ global {
 			}
 			if catchment_connected = [] { do die; }
 		}
-		
+		//land cells over impervious areas are set to impervious, impervious areas have different runoff/lag properties and do not absorb water, giving it straight to runoff
 		geometry impervious <- geometry(impervious_shape);
 		ask land_cell overlapping impervious {
 			impervious <- true;
@@ -67,7 +64,8 @@ global {
 			}
 		}
 		
-		//initialise each rain cell with its precipitation per step		
+		//initialise each rain cell with its precipitation per step from bom data
+		//the csv stores the data for the whole grid in a single column per time step
 		matrix rain <- matrix(rain_csv);
 		end_precipitation <- rain.columns-4;
 		loop id from: 0 to: rain.rows-1 {
@@ -77,12 +75,14 @@ global {
 						precip_list <- precip_list + float(rain[val+3, id])#mm;
 					}
 				}
+				//record maximum precipitation over the entire csv file. Used for rendering the rain grid in visualisation
 				float local_max <- precip_list max_of each;
 				if local_max > max_rain {
 					max_rain <- local_max;
 				}
 			}
 		}
+		//store list of connected land cells in each rain cell, this is used for the rain reflex
 		ask land_cell {
 			ask rain_cell overlapping location {
 				self.land_connected <- self.land_connected + myself;
@@ -90,7 +90,7 @@ global {
 		}
 		
 	}
-	
+	//once the csv file is finished, kill all rain cells to avoid indexing errors in the precipitation list
 	reflex stop_rain when: cycle = end_precipitation {
 		ask rain_cell {
 			do die;
@@ -98,18 +98,19 @@ global {
 	}
 		
 }
-	
+
+//rain cells are initialised from geotif file to give location etc
 grid rain_cell file: rain_tif {
 	list<float> precip_list;
-	float precip_now update: precip_list at cycle;
+	float precip_now update: precip_list at cycle; //the value of precipitation at the current cycle
 	list<land_cell> land_connected;
-	
+	// if there is rain at the current time step add rain to the connected land units
 	reflex raining when: precip_now > 0{
 		ask land_connected parallel: true {
 			precip_received <- precip_received + myself.precip_now;
 		}
 	}
-	
+	//update colour of rain cells based on a scale from 0 to the maximum precipitation in the csv file
 	aspect default {
 		int precip_colour <- 255-int(log(precip_now/max_rain*10+1)*255);
 		draw shape color: rgb(precip_colour, precip_colour, 255);
