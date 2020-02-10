@@ -63,6 +63,7 @@ global {
 				i <- i + 1;
 			}
 			*/
+			ask catchment where (each overlaps rain_cell[30] = true) { do die; }
 		}
 		
 }
