@@ -63,7 +63,21 @@ global {
 				i <- i + 1;
 			}
 			*/
-			ask catchment where (each overlaps rain_cell[30] = true) { do die; }
+			//ask catchment where (each overlaps rain_cell[30] = true) { do die; }
+			
+			ask rain_cell {
+				ask catchment where (each overlaps self = true) {
+					write("new thing");
+					geometry new_shape;
+					ask myself.land_connected where (self overlaps each = true) {
+						new_shape <- new_shape + self.shape;
+					}
+					create land_block {
+						shape <- new_shape;
+					}
+					
+				}
+			}
 		}
 		
 }
@@ -78,7 +92,7 @@ species catchment {
 species land_block {
 	geometry shape;
 	aspect default {
-		draw shape;
+		draw shape border: #black width: 3;
 	}
 }
 
