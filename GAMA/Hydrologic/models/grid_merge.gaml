@@ -16,6 +16,8 @@ global {
 	file rain_tif <-file("../../../data/gis/rain_grid.tif");
 	file rain_csv <- file("../../../data/rain/gong_csv.csv");
 	
+	topology rain_topo;
+	
 	float max_rain;
 	
 	geometry shape <- envelope(rain_tif); //could be dem_grid or rain_grid depending on what Anton says about resolution etc
@@ -32,6 +34,7 @@ global {
 	float LAG_STREAM <- 1.0;
 			
 	init{
+			rain_topo <- topology(matrix(rain_tif));
 			loop cat over: catchments_shape {
 				create catchment from: [cat];
 			}
@@ -63,9 +66,9 @@ global {
 				i <- i + 1;
 			}
 			*/
-			//ask catchment where (each overlaps rain_cell[30] = true) { do die; }
+			//ask catchment where (each overlaps rain_cell[30]) { do die; }
 			
-			ask rain_cell {
+			/*ask rain_cell {
 				ask catchment where (each overlaps self = true) {
 					write("new thing");
 					geometry new_shape;
@@ -76,6 +79,17 @@ global {
 						shape <- new_shape;
 					}
 					
+				}
+			}*/
+			ask rain_cell {
+				ask catchment where (each overlaps self) {
+					list<land_cell> temp_linked;
+					ask land_cell where (each overlaps self and each overlaps myself) {
+						temp_linked <- temp_linked + self;
+					}
+					create land_block {
+						linked_cells <- temp_linked;
+					}
 				}
 			}
 		}
@@ -90,15 +104,24 @@ species catchment {
 }
 
 species land_block {
-	geometry shape;
-	aspect default {
-		draw shape border: #black width: 3;
+	list<land_cell> linked_cells;
+	
+	
+	reflex rand_colour {
+		rgb temp_colour <- rgb(rnd(255), rnd(255), rnd(255));
+		ask linked_cells {
+			colour <- temp_colour;
+		}
 	}
 }
 
 grid land_cell file: elevation_tif {
 	bool impervious <- false;
+	rgb colour;
 	list<catchment> catchment_connected;
+	aspect default {
+		draw shape color: colour;
+	}
 }
 
 grid rain_cell file: rain_tif {
@@ -112,6 +135,7 @@ experiment Visualise type: gui {
 	output {
 		display disp type: opengl {
 			species catchment;
+			species land_cell position: {0, 0, 0.25};
 			species land_block position: {0, 0, 0.25};
 			species rain_cell position: {0, 0, 0.5};
 		}
