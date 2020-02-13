@@ -84,11 +84,22 @@ global {
 			ask rain_cell {
 				ask catchment where (each overlaps self) {
 					list<land_cell> temp_linked;
+					int temp_pervious <- 0;
+					int temp_impervious <- 0;
+					
 					ask land_cell where (each overlaps self and each overlaps myself) {
 						temp_linked <- temp_linked + self;
+						if self.impervious {
+							temp_impervious <- temp_impervious + 1;
+						}
+						else {
+							temp_pervious <- temp_pervious + 1;
+						}
 					}
 					create land_block {
 						linked_cells <- temp_linked;
+						num_pervious <- temp_pervious;
+						num_impervious <- temp_impervious;
 					}
 				}
 			}
@@ -105,7 +116,9 @@ species catchment {
 
 species land_block {
 	list<land_cell> linked_cells;
-	
+	float infil_storage <- 0.0 max: infil_constant;
+	int num_pervious;
+	int num_impervious;
 	
 	reflex rand_colour {
 		rgb temp_colour <- rgb(rnd(255), rnd(255), rnd(255));
@@ -135,7 +148,7 @@ experiment Visualise type: gui {
 	output {
 		display disp type: opengl {
 			species catchment;
-			species land_cell position: {0, 0, 0.25};
+			//species land_cell position: {0, 0, 0.25};
 			species land_block position: {0, 0, 0.25};
 			species rain_cell position: {0, 0, 0.5};
 		}

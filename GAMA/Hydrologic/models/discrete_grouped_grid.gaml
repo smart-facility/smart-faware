@@ -159,6 +159,47 @@ grid land_cell file: elevation_tif {
 	}
 }
 
+species land_block {
+	list<land_cell> linked_cells;
+	float precip_received <- 0.0;
+	float infil_storage <- 0.0 max: infil_constant;
+	int num_pervious;
+	int num_impervious;
+	
+	reflex runoff_all when: (precip_received > 0) {
+		
+	}
+	
+	reflex storage when: !impervious and (infil_storage < infil_constant) and (precip_received > 0){
+		float difference <- infil_storage + precip_received - infil_constant;
+		if difference < 0 {
+			infil_storage <- infil_storage + precip_received;
+			precip_received <- 0.0;
+		}
+		else {
+			infil_storage <- infil_constant;
+			ask catchment_connected {
+				runoff_pervious <- runoff_pervious + difference*(1-infil_proportionate)*resolution^2;
+			}
+			precip_received <- 0.0;
+		}
+	}
+	
+	reflex runoff_pervious when: (infil_storage = infil_constant) and (precip_received > 0) {
+		ask catchment_connected {
+			runoff_pervious <- runoff_pervious + myself.precip_received*(1-infil_proportionate)*resolution^2;
+		}
+		precip_received <- 0.0;
+	}
+	
+	reflex runoff_impervious when: (impervious = true) and (precip_received > 0){
+		ask catchment_connected {
+			runoff_impervious <- runoff_impervious + myself.precip_received*resolution^2;
+		}
+		precip_received <- 0.0;
+	}
+}
+
 species catchment {
 	int downstream;
 	int num_cells;

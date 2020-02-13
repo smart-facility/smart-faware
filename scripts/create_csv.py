@@ -27,7 +27,7 @@ def load_nc(file):
         try:
             sys.stdout = open(os.devnull, 'w')
             sys.stderr = sys.stdout
-            dataset = gdal.Open(file, gdal.GA_ReadOnly)
+            
             array_now = dataset.ReadAsArray()
             sys.stdout = sys.__stdout__
             sys.stderr = sys.stdout
@@ -118,4 +118,4 @@ folder_name = root+"/"+"data/rain/Rainfield_Files/05"
 #array = load_nc(folder_name)
 #write_csv(array)
 '''
-# %%
+# %%dataset = gdal.Open(file, gdal.GA_ReadOnly)
