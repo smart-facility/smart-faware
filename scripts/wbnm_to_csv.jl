@@ -24,14 +24,14 @@ let offset_1 = 1, offset_2 = 1, steps=num_steps
         gauge_coords = temp.match
         latitude = parse(Float64, temp.captures[1])
         longitude = parse(Float64, temp.captures[2])
-        offset_1 = temp.offset + 1
+        offset_1 = temp.offset + 20
         println(gauge_coords)
         temp = match(r"[0-9]{5,6}\.[0-9]{2}.*?[0-9]{5,6}\.[0-9]{2}.*(\n.*)*?\n.*\n.*[0-9]{5,6}\.[0-9]", precipitation_data, offset_2)
         numbers = temp.captures[1]
-        print(numbers)
-        print("Printed")
-        nums = []
-        
+        println(numbers[1:10])
+        #print(temp.match)
+        #print(numbers)
+        #=
         let offset = 1
             for step=1:steps
                 temp_num = match(r".*([0-9]{1,4}\.[0-9]{2})", numbers, offset)
@@ -43,7 +43,10 @@ let offset_1 = 1, offset_2 = 1, steps=num_steps
         end
         println(nums)
         cells[gauge] = rain_cell(latitude, longitude, nums)
-        offset_2 = temp.offset + 1
+        =#
+        nums = []
+        
+        offset_2 = offset_1#temp.offset + 1
     end
 end
 
