@@ -20,33 +20,11 @@ cells = Array{Any, num_gauge}
 
 let offset_1 = 1, offset_2 = 1, steps=num_steps
     for gauge=1:num_gauge
-        temp = match(r"([0-9]{5,6}\.[0-9]{2}).*?([0-9]{5,6}\.[0-9]{2})", precipitation_data, offset_1)
-        gauge_coords = temp.match
-        latitude = parse(Float64, temp.captures[1])
-        longitude = parse(Float64, temp.captures[2])
-        offset_1 = temp.offset + 20
-        println(gauge_coords)
-        temp = match(r"[0-9]{5,6}\.[0-9]{2}.*?[0-9]{5,6}\.[0-9]{2}.*(\n.*)*?\n.*\n.*[0-9]{5,6}\.[0-9]", precipitation_data, offset_2)
-        numbers = temp.captures[1]
-        println(numbers[1:10])
-        #print(temp.match)
-        #print(numbers)
-        #=
-        let offset = 1
-            for step=1:steps
-                temp_num = match(r".*([0-9]{1,4}\.[0-9]{2})", numbers, offset)
-                num = parse(Float64, temp_num.match)
-                print(num)
-                append!(nums, num)
-                offset = temp_num.offset + 1
-            end
-        end
-        println(nums)
-        cells[gauge] = rain_cell(latitude, longitude, nums)
-        =#
-        nums = []
-        
-        offset_2 = offset_1#temp.offset + 1
+        latitude, longitude = match(r"(?:\w|\s)+\n\s+(?<latitude>[0-9]{5,7}\.[0-9]{2})\s+(?<longitude>[0-9]{5,7}\.[0-9]{2})", precipitation_data, offset_1).captures
+        println(latitude, " ", longitude)
+        offset_1 = offset_1 + 2000
+        #[x.captures for x in eachmatch(r".*\n\s+(?<latitude>[0-9]{5,7}\.[0-9]{2})\s+(?<longitude>[0-9]
+        #grab all the coordinates
     end
 end
 
