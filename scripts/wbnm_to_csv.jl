@@ -1,7 +1,8 @@
-struct rain_cell
+struct Rain_Gauge
+    name::String
     latitude::Float64
     longitude::Float64
-    precipitation::Array{Float64}
+    precipitation::Array{Float16}
 end
 
 in_path = "Resources/WBNM2017_v001/WBNM 1998/190917_FCT_CS08a_STR02_August1998_RF11.wbn"
@@ -12,19 +13,14 @@ file_content = read(file, String)
 
 precipitation_data = match(r"#####START_RECORDED_RAIN(?s).*#####END_RECORDED_RAIN", file_content).match
 
-num_gauge = parse(Int, match(r"(\d+).*\n.*\n.*[0-9]{5,6}\.[0-9]{2}.*?[0-9]{5,6}\.[0-9]{2}", precipitation_data).captures[1])
+gauges = [x.match for x in eachmatch(r".*\n\s+\d{4,7}\.\d{2}\s+\d{4,7}\.\d{2}.*\n(?:.*\d{1,3}\.\d{2}\r\n)*", precipitation_data)]
+num_gauge = length(gauges)
 
-num_steps = parse(Int, match(r".*\n.*\n.*\n.*?(\d+)", precipitation_data).captures[1])
-
-cells = Array{Any, num_gauge}
-
-let offset_1 = 1, offset_2 = 1, steps=num_steps
-    for gauge=1:num_gauge
-        latitude, longitude = match(r"(?:\w|\s)+\n\s+(?<latitude>[0-9]{5,7}\.[0-9]{2})\s+(?<longitude>[0-9]{5,7}\.[0-9]{2})", precipitation_data, offset_1).captures
-        println(latitude, " ", longitude)
-        offset_1 = offset_1 + 2000
-        #[x.captures for x in eachmatch(r".*\n\s+(?<latitude>[0-9]{5,7}\.[0-9]{2})\s+(?<longitude>[0-9]
-        #grab all the coordinates
-    end
+cells = Dict()
+for gauge=1:num_gauge
+    gauge_capture = gauges[gauge]
+    name = match(r".*\n", gauge_capture).match
+    latitude, longitude = [parse(Float64, x) for x in match(r"(?<latitude>\d{4,7}\.\d{2})\s+(?<longitude>\d{4,7}\.\d{2})", gauge_capture).captures]
+    values = [parse(Float16, x.match) for x in eachmatch(r"\d{1,3}\.\d{2}", gauge_capture)]
+    cells[gauge] = Rain_Gauge(name, latitude, longitude, values)
 end
-
