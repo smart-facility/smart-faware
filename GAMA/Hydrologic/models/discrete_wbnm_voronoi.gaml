@@ -13,18 +13,14 @@ global {
 	file catchments_shape <- file("../../../data/gis/catchment_shape.shp");
 	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
 	file elevation_tif <- file("../../../data/gis/elevation_grid.tif");
-	file rain_tif <- file("../../../data/gis/rain_grid.tif");
-	file rain_csv <- file("../../../data/rain/gong_csv.csv");
-	
 	file rain_shape <- file("../../../data/gis/gauge_voronoi.shp");
-	
-	float max_rain;
-	
-	geometry shape <- envelope(rain_tif); //could be dem_grid or rain_grid depending on what Anton says about resolution etc
+	file rain_csv <- file("../../../data/rain/1998.csv");
+		
+	geometry shape <- envelope(rain_shape); //could be dem_grid or rain_grid depending on what Anton says about resolution etc
 		
 	int end_precipitation; //after this step kills all rain cells to prevent indexing error
 	
-	float step <- 10#mn/74; //step sized determined from netCDF file, files last 10 minutes with 74 steps
+	float step <- 5#mn; //step sized determined from netCDF file, files last 10 minutes with 74 steps
 	float resolution <- 10#m; //update to grab from the selected tif
 	
 	float infil_constant <- 5#mm; //better name, double check for certainty
@@ -42,9 +38,19 @@ global {
 			}
 		}
 		
+		matrix rain <- matrix(rain_csv);
+		end_precipitation <- rain.columns - 6;
+		
 		loop gauge over: rain_shape {
 			create rain_poly from: [gauge] {
 				id <- int(gauge get "id");
+				loop row_num from: 0 to: rain.rows-1 {
+					if self.id = int(rain[2, row_num]) {
+						loop col_num from: 3 to: rain.columns-4 {
+							precip_list <- precip_list + rain[col_num, row_num];
+						}
+					}
+				}
 			}
 		}
 			
@@ -67,25 +73,11 @@ global {
 		
 		//initialise each rain cell with its precipitation per step from bom data
 		//the csv stores the data for the whole grid in a single column per time step
-		matrix rain <- matrix(rain_csv);
-		end_precipitation <- rain.columns-4;
-		loop id from: 0 to: rain.rows-1 {
-			ask rain_cell{
-				if (string(id) = replace(name, "rain_cell", "")) {
-					loop val from: 0 to: rain.columns - 4 {
-						precip_list <- precip_list + float(rain[val+3, id])#mm;
-					}
-				}
-				//record maximum precipitation over the entire csv file. Used for rendering the rain grid in visualisation
-				float local_max <- precip_list max_of each;
-				if local_max > max_rain {
-					max_rain <- local_max;
-				}
-			}
-		}
+		
+		
 		//store list of connected land cells in each rain cell, this is used for the rain reflex
 		ask land_cell {
-			ask rain_cell overlapping location {
+			ask rain_poly overlapping location {
 				self.land_connected <- self.land_connected + myself;
 			}
 		}
@@ -93,7 +85,7 @@ global {
 	}
 	//once the csv file is finished, kill all rain cells to avoid indexing errors in the precipitation list
 	reflex stop_rain when: cycle = end_precipitation {
-		ask rain_cell {
+		ask rain_poly {
 			do die;
 		}
 	}
@@ -101,27 +93,21 @@ global {
 }
 
 //rain cells are initialised from geotif file to give location etc
-grid rain_cell file: rain_tif {
+
+species rain_poly {
+	int id;
 	list<float> precip_list;
-	float precip_now update: precip_list at cycle; //the value of precipitation at the current cycle
+	float precip_now update: precip_list at cycle;
 	list<land_cell> land_connected;
-	// if there is rain at the current time step add rain to the connected land units
-	reflex raining when: precip_now > 0{
+	
+	reflex raining when: precip_now > 0 {
 		ask land_connected parallel: true {
 			precip_received <- precip_received + myself.precip_now;
 		}
 	}
-	//update colour of rain cells based on a scale from 0 to the maximum precipitation in the csv file
 	aspect default {
-		int precip_colour <- 255-int(log(precip_now/max_rain*10+1)*255);
-		draw shape color: rgb(precip_colour, precip_colour, 255);
-	}
-}
-
-species rain_poly {
-	int id;
-	aspect default {
-		draw shape color: #blue border: #black width: 3;
+		int precip_colour <- 255-int(log(precip_now/100*10+1)*255);
+		draw shape color: rgb(precip_colour, precip_colour, 255) border: #black width: 3;
 	}
 }
 
