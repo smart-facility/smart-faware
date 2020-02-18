@@ -16,8 +16,6 @@ global {
 	file rain_tif <- file("../../../data/gis/rain_grid.tif");
 	file rain_csv <- file("../../../data/rain/gong_csv.csv");
 	
-	file rain_shape <- file("../../../data/gis/gauge_voronoi.shp");
-	
 	float max_rain;
 	
 	geometry shape <- envelope(rain_tif); //could be dem_grid or rain_grid depending on what Anton says about resolution etc
@@ -38,12 +36,6 @@ global {
 		loop cat over: catchments_shape {
 			create catchment from: [cat] {
 				downstream <- int(cat get "DOWNSTREAM")-1;
-				
-			}
-		}
-		
-		loop gauge over: rain_shape {
-			create rain_poly from: [gauge] {
 				
 			}
 		}
@@ -115,12 +107,6 @@ grid rain_cell file: rain_tif {
 	aspect default {
 		int precip_colour <- 255-int(log(precip_now/max_rain*10+1)*255);
 		draw shape color: rgb(precip_colour, precip_colour, 255);
-	}
-}
-
-species rain_poly {
-	aspect default {
-		draw shape color: #blue border: #black width: 3;
 	}
 }
 
@@ -268,8 +254,8 @@ experiment Visualise type: gui {
 	output {
 		display main type: opengl {	
 			species catchment;
-			//species land_cell position: {0, 0, 0.15} transparency: 0.4;
-			species rain_poly position: {0, 0, 0.4} transparency: 0.6;
+			species land_cell position: {0, 0, 0.15} transparency: 0.4;
+			species rain_cell position: {0, 0, 0.4} transparency: 0.6;
 		}
 		
 		display charts refresh: every(1#cycles) {
