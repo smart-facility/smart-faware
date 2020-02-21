@@ -275,7 +275,11 @@ experiment Visualise type: gui {
 		display main type: opengl {	
 			species catchment;
 			//species land_cell position: {0, 0, 0.15} transparency: 0.4;
+			graphics impervious position: {0, 0, 0.1} transparency: 0.2 {
+				draw impervious_shape color: #darkgray;
+			}
 			species rain_poly position: {0, 0, 0.4} transparency: 0.6;
+			//species water;
 		}
 		
 		display charts refresh: every(1#cycles) {
