@@ -1,18 +1,27 @@
 model polygraph
 
 global {
+	/*
+	 * Here listed are all the files responsible for initialising the model
+	 */
 	file rain_tif <- file("../../../data/gis/rain_grid.tif");
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
 	geometry shape <- envelope(catchment_shape);
 	
 	
 	init {
-		loop poly over: matrix(rain_tif) {
-			create rain_poly from: [poly];
-			write(poly);
+		loop poly over: rain_tif {
+			create rain_poly from: [poly] {
+				id <- int(self get "id");
+				if id = 0 {
+					id <- int(replace(name, "rain_poly", ""));
+				}
+				
+			}
 		}
 	}
 }
+
 
 
 species rain_poly {
