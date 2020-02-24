@@ -26,19 +26,25 @@ global {
 	}
 }
 
-species catchment edge_species: stream {
+species catchment parent: graph_node edge_species: stream {
 	catchment downstream;
 	list<catchment> upstream;
-		
+	
+	//graph my_graph;
+	
+	bool related_to (catchment other) {
+		return true;
+	}
+	
 	aspect default {
-		draw shape color: #blue;
+		draw shape color: #blue border: #black width: 3;
 	}
 }
 
 species stream parent: base_edge {
 	
 	aspect default {
-		draw shape color: #black;
+		draw shape color: #white width: 2;
 	}
 }
 

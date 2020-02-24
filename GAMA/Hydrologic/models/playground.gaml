@@ -261,7 +261,7 @@ species catchment {
 	}
 	
 	aspect default {
-		draw shape color: #blue border: #black width: 3 depth: storage/500;
+		draw shape color: #blue depth: storage/500;
 	}
 }
 
@@ -271,18 +271,20 @@ experiment Visualise type: gui {
 	parameter "Elevation/Land Cell tif" var: elevation_tif category: "Inputs";
 	output {
 		display main type: opengl {	
-			species catchment;
+			species catchment transparency: 0.6;
 			
 			//species land_cell position: {0, 0, 0.15} transparency: 0.4;
+			/*
 			graphics impervious position: {0, 0, 0.1} transparency: 0.2 {
 				draw impervious_shape color: #darkgray;
 			}
+			*/
 			
-			graphics "edges" position: {0, 0, 0.2} {
+			/* graphics "edges" position: {0, 0, 0.2} {
 				loop edge over: catchment_network.edges {
 					draw edge color: #yellow width: 5;
 				}
-			}
+			} */
 			
 			species rain_poly position: {0, 0, 0.4} transparency: 0.6;
 		}
