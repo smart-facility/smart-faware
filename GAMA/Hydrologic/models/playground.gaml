@@ -223,7 +223,7 @@ species catchment {
 				do flow(self);
 			}
 			
-			if storage != 0 { out_flow <- step*(storage/constant#h)^(1/0.77); }
+			if storage != 0 { out_flow <- step*50*(storage/constant#h)^(1/0.77); }
 			else { out_flow <- 0.0; }
 			
 			write(string(target.catchment_type)+": "+string(out_flow));
@@ -231,7 +231,7 @@ species catchment {
 			in_flow <- 0.0;
 		}
 		else if target.catchment_type = "head" {
-			if storage != 0 { out_flow <- step*(storage/constant#h)^(1/0.77); }
+			if storage != 0 { out_flow <- step*50*(storage/constant#h)^(1/0.77); }
 			else { out_flow <- 0.0; }
 			
 			write(string(target.catchment_type)+": "+string(out_flow));
@@ -244,7 +244,7 @@ species catchment {
 			ask upstream parallel: false {
 				do flow(self);
 			}
-			if storage != 0 { out_flow <- step*(storage/constant#h)^(1/0.77); }
+			if storage != 0 { out_flow <- step*50*(storage/constant#h)^(1/0.77); }
 			else { out_flow <- 0.0; }
 			
 			write(string(target.catchment_type)+": "+string(out_flow));
