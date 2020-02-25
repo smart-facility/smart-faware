@@ -147,26 +147,20 @@ species catchment {
 		}
 		storage <- storage + (in_flow - out_flow);
 		in_flow <- 0.0;
-		ask downstream {
-			self.in_flow <- myself.out_flow;
+		if downstream != nil{
+			ask downstream {
+				self.in_flow <- myself.out_flow;
+			}
 		}
 	}
 	
 	species outlet {
 		reflex flow_start {
-		ask upstream {
-			do flow;
+			ask host {
+				do flow;
+			}
 		}
-		if storage != 0 {
-		out_flow <- step*(storage/constant)^(1/0.77);
-		}
-		else {
-			out_flow <- 0.0;
-		}
-		storage <- storage + (in_flow - out_flow);
-		in_flow <- 0.0;
 	}
-}
 	
 	aspect default {
 		draw shape color: #blue depth: storage/500;
@@ -178,6 +172,11 @@ experiment Visualise type: gui {
 		display main type: opengl {
 			species catchment transparency: 0.6;
 			species rain_poly position: {0, 0, 0.4} transparency: 0.6;
+		}
+		display charts refresh: every (1#cycle) {
+			chart "out catchment" type: series {
+				data "storage in m3" value: catchment[36].storage color: #green;
+			}
 		}
 	}
 }
