@@ -11,7 +11,7 @@ global {
 	/*
 	 * a list of constants
 	 */
-	
+	float LAG_PARAM <- 1.61;
 	/*
 	 * world parameters
 	 */
@@ -29,7 +29,10 @@ global {
 					upstream <- upstream + myself;
 				}
 			}
-			
+			else {
+				create outlet;
+			}
+			constant <- LAG_PARAM*((self.shape.area/#km^2)^0.57)#h;
 		}
 		
 		//create rain_polys
@@ -70,9 +73,6 @@ global {
 				}
 			}
 		}
-		
-		
-		
 	}
 	
 	reflex end_rain when: cycle = end_rain {
@@ -134,6 +134,39 @@ species catchment {
 	float storage;
 	
 	float constant;
+	
+	action flow {
+		if upstream != [] {
+			ask upstream {do flow;}
+		}
+		if storage != 0 {
+			out_flow <- step*(storage/constant)^(1/0.77);
+		}
+		else {
+			out_flow <- 0.0;
+		}
+		storage <- storage + (in_flow - out_flow);
+		in_flow <- 0.0;
+		ask downstream {
+			self.in_flow <- myself.out_flow;
+		}
+	}
+	
+	species outlet {
+		reflex flow_start {
+		ask upstream {
+			do flow;
+		}
+		if storage != 0 {
+		out_flow <- step*(storage/constant)^(1/0.77);
+		}
+		else {
+			out_flow <- 0.0;
+		}
+		storage <- storage + (in_flow - out_flow);
+		in_flow <- 0.0;
+	}
+}
 	
 	aspect default {
 		draw shape color: #blue depth: storage/500;
