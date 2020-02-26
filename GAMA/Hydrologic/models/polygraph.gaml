@@ -163,7 +163,7 @@ species catchment {
 	}
 	
 	aspect default {
-		draw shape color: #blue depth: storage/500;
+		draw shape color: #blue depth: storage*1000/self.shape.area;
 	}
 }
 
