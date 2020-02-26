@@ -35,6 +35,7 @@ def load_nc(file):
         array_now = np.reshape(array_now, (10, 74, 512, 512))
         #cut array down to area covering wollongong
         array_now = array_now[:, :, 253:260, 379:386]#*0.05#*3600/(600/74)*0.05
+        ''' This needs to be checked to make sure we're pushing the right units !!! '''
         return array_now
     else:
         print("##BIG WOOPSY##")

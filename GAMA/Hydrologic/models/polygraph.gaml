@@ -80,6 +80,10 @@ global {
 			do die;
 		}
 	}
+	
+	reflex pause_sim when: (cycle > end_rain) and (catchment[36].out_flow/step < 0.1) {
+		do pause;
+	}
 }
 
 
@@ -174,8 +178,17 @@ experiment Visualise type: gui {
 			species rain_poly position: {0, 0, 0.4} transparency: 0.6;
 		}
 		display charts refresh: every (1#cycle) {
-			chart "out catchment" type: series {
-				data "storage in m3" value: catchment[36].storage color: #green;
+			chart "catch36" type: series position: {0, 0} size: {0.5, 0.5} {
+				data "output in m3/s" value: catchment[36].out_flow/step color: #blue;
+			}
+			chart "catch36" type: series position: {0, 0.5} size: {0.5, 0.5} {
+				data "storage in m" value: catchment[36].storage/catchment[36].shape.area color: #green;
+			}
+			chart "catch12" type: series position: {0.5, 0} size: {0.5, 0.5} {
+				data "output in m3/s" value: catchment[12].out_flow/step color: #blue;
+			}
+			chart "catch12" type: series position: {0.5, 0.5} size: {0.5, 0.5} {
+				data "storage in m" value: catchment[12].storage/catchment[12].shape.area color: #green;
 			}
 		}
 	}
