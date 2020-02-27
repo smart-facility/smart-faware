@@ -25,8 +25,8 @@ global {
 
 species grabber skills: [network] {
 	reflex fetch when: has_more_message() {
-		message mess <- fetch_message();
-		write name + " fetched: " + mess.contents;
+		//message mess <- fetch_message();
+		//write name + " fetched: " + mess.contents;
 	}
 }
 

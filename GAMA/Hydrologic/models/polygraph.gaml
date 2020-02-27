@@ -143,17 +143,18 @@ species catchment {
 		if upstream != [] {
 			ask upstream {do flow;}
 		}
+		storage <- storage + in_flow;
 		if storage != 0 {
 			out_flow <- step*(storage/constant)^(1/0.77);
 		}
 		else {
 			out_flow <- 0.0;
 		}
-		storage <- storage + (in_flow - out_flow);
+		storage <- storage - out_flow;
 		in_flow <- 0.0;
 		if downstream != nil{
 			ask downstream {
-				self.in_flow <- myself.out_flow;
+				self.in_flow <- self.in_flow + myself.out_flow;
 			}
 		}
 	}
@@ -200,8 +201,8 @@ experiment Log type: gui {
 		save catchment collect replace(each.name, "catchment", "") to: output_file rewrite: true type: "csv" header: false;
 	}
 	reflex save {
-		//save list(matrix(catchment collect each.out_flow)/step) to: output_file rewrite: false type: "csv";
-		save list(matrix(catchment collect each.storage)/matrix(catchment collect each.shape.area)/#mm) to: output_file rewrite: false type: "csv";
+		save list(matrix(catchment collect each.out_flow)/step) to: output_file rewrite: false type: "csv";
+		//save list(matrix(catchment collect each.storage)/matrix(catchment collect each.shape.area)/#mm) to: output_file rewrite: false type: "csv";
 	}
 	
 	output {
