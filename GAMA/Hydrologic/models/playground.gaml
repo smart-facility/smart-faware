@@ -15,12 +15,8 @@ global {
 species voroni {
 	
 	
-	reflex update_voronoi{
-		list<point> points <- [];
-		loop id over: juliet {
-			points <- points + id.location;
-		}
-		list<geometry> voronois <- voronoi(points);
+	reflex update_voronoi {
+		list<geometry> voronois <- voronoi(juliet collect each.location);
 		ask juliet {
 			shape <- geometry(voronois where (each overlaps location));
 		}
@@ -28,7 +24,7 @@ species voroni {
 	
 	species juliet{
 		reflex move {
-			location <- location + rnd({-10, -10}, {10, 10});
+			location <- location + rnd({-0.1, -0.1}, {0.1, 0.1});
 		}
 	}
 	

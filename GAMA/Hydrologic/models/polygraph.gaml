@@ -26,7 +26,7 @@ global {
 			if down_index >= 0 {
 				downstream <- catchment[down_index];
 				ask downstream {
-					upstream <- upstream + myself;
+					upstream << myself;
 				}
 			}
 			else {
@@ -52,14 +52,14 @@ global {
 				//grab column of matrix containing indices to check for the relevant row to grab rain from
 				list indices;
 				loop row from: 0 to: rain.rows-1 {
-					indices <- indices + int(rain[2, row]);
+					indices << int(rain[2, row]);
 				}
 				int row <- indices index_of id;
 				
 				//create list of precipitation values and store as matrix in agent
 				list<float> precip_list <- [];
 				loop column from: 3 to: rain.columns-1 {
-					precip_list <- precip_list + float(rain[column, row]);
+					precip_list << float(rain[column, row]);
 				}
 				precipitation <- matrix(precip_list);
 				
@@ -189,6 +189,28 @@ experiment Visualise type: gui {
 			}
 			chart "catch12" type: series position: {0.5, 0.5} size: {0.5, 0.5} {
 				data "storage in m" value: catchment[12].storage/catchment[12].shape.area color: #green;
+			}
+		}
+	}
+}
+
+experiment Log type: gui {
+	string output_file <- "../output/out.csv";
+	init {
+		save catchment collect replace(each.name, "catchment", "") to: output_file rewrite: true type: "csv" header: false;
+	}
+	reflex save {
+		//save list(matrix(catchment collect each.out_flow)/step) to: output_file rewrite: false type: "csv";
+		save list(matrix(catchment collect each.storage)/matrix(catchment collect each.shape.area)/#mm) to: output_file rewrite: false type: "csv";
+	}
+	
+	output {
+		display catchment_labels {
+			species catchment;
+			graphics "names" {
+				loop cat over: catchment {
+					draw replace(cat.name, "catchment", "") at: cat.location;
+				}
 			}
 		}
 	}
