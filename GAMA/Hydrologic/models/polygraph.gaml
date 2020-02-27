@@ -4,9 +4,9 @@ global {
 	/*
 	 * Here listed are all the files responsible for initialising the model
 	 */
-	file rain_tif <- file("../../../data/gis/gauge_voronoi.shp");
+	file rain_tif <- file("../../../data/gis/rain_grid.tif");
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	file rain_csv <- file("../../../data/rain/1998.csv");
+	file rain_csv <- file("../../../data/rain/new_mmhr.csv");
 	
 	/*
 	 * a list of constants
@@ -16,7 +16,7 @@ global {
 	 * world parameters
 	 */
 	geometry shape <- envelope(catchment_shape);
-	float step <- 5#mn;
+	float step <- 10#mn/74;
 	int end_rain;
 	
 	init {
@@ -144,7 +144,7 @@ species catchment {
 			ask upstream {do flow;}
 		}
 		storage <- storage + in_flow;
-		if storage != 0 {
+		if storage > 0 {
 			out_flow <- step*(storage/constant)^(1/0.77);
 		}
 		else {
@@ -196,13 +196,14 @@ experiment Visualise type: gui {
 }
 
 experiment Log type: gui {
-	string output_file <- "../output/out.csv";
+	string output_file <- "../output/out";
 	init {
-		save catchment collect replace(each.name, "catchment", "") to: output_file rewrite: true type: "csv" header: false;
+		save catchment collect replace(each.name, "catchment", "") to: output_file+"flow.csv" rewrite: true type: "csv" header: false;
+		save catchment collect replace(each.name, "catchment", "") to: output_file+"level.csv" rewrite: true type: "csv" header: false;
 	}
 	reflex save {
-		save list(matrix(catchment collect each.out_flow)/step) to: output_file rewrite: false type: "csv";
-		//save list(matrix(catchment collect each.storage)/matrix(catchment collect each.shape.area)/#mm) to: output_file rewrite: false type: "csv";
+		save list(matrix(catchment collect each.out_flow)/step) to: output_file+"flow.csv" rewrite: false type: "csv";
+		save list(matrix(catchment collect each.storage)/matrix(catchment collect each.shape.area)/#mm) to: output_file+"level.csv" rewrite: false type: "csv";
 	}
 	
 	output {
