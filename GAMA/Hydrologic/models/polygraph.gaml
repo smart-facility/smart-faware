@@ -144,7 +144,7 @@ species catchment {
 			ask upstream {do flow;}
 		}
 		storage <- storage + in_flow;
-		if storage > 0 {
+		if storage != 0 {
 			out_flow <- step*(storage/constant)^(1/0.77);
 		}
 		else {

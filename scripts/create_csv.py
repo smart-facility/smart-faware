@@ -27,7 +27,7 @@ def load_nc(file):
     if ".qpf-ens.nc" in file:
         try:
             dataset = gdal.Open(file, gdal.GA_ReadOnly)
-            array_now = dataset.ReadAsArray()
+            array_now = dataset.ReadAsArray().astype(float)
         except:
             print("Error reading data")
             return "error"
