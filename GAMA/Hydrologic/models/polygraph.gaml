@@ -4,9 +4,9 @@ global {
 	/*
 	 * Here listed are all the files responsible for initialising the model
 	 */
-	file rain_tif <- file("../../../data/gis/rain_grid.tif");
+	file rain_tif <- file("../../../data/gis/gauge_voronoi.shp");
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	file rain_csv <- file("../../../data/rain/new_mmhr.csv");
+	file rain_csv <- file("../../../data/rain/1998.csv");
 	
 	/*
 	 * a list of constants
@@ -16,7 +16,7 @@ global {
 	 * world parameters
 	 */
 	geometry shape <- envelope(catchment_shape);
-	float step <- 10#mn/74;
+	float step <- 5#mn;
 	int end_rain;
 	
 	init {
