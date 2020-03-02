@@ -24,7 +24,7 @@ species voroni {
 	
 	species juliet{
 		reflex move {
-			location <- location + rnd({-0.1, -0.1}, {0.1, 0.1});
+			location <- location + rnd({-0.1, -0.1}*10, {0.1, 0.1}*10);
 		}
 	}
 	

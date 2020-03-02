@@ -4,9 +4,9 @@ global {
 	/*
 	 * Here listed are all the files responsible for initialising the model
 	 */
-	file rain_tif <- file("../../../data/gis/gauge_voronoi.shp");
+	file rain_tif <- file("../../../data/gis/rain_grid.tif");
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	file rain_csv <- file("../../../data/rain/1998.csv");
+	file rain_csv <- file("../../../data/rain/single.csv");
 	
 	/*
 	 * a list of constants
@@ -16,7 +16,7 @@ global {
 	 * world parameters
 	 */
 	geometry shape <- envelope(catchment_shape);
-	float step <- 5#mn;
+	float step <- 10#mn/74;
 	int end_rain;
 	
 	init {
@@ -185,11 +185,11 @@ experiment Visualise type: gui {
 			chart "catch36" type: series position: {0, 0.5} size: {0.5, 0.5} {
 				data "storage in m" value: catchment[36].storage/catchment[36].shape.area color: #green;
 			}
-			chart "catch12" type: series position: {0.5, 0} size: {0.5, 0.5} {
-				data "output in m3/s" value: catchment[12].out_flow/step color: #blue;
+			chart "catch0" type: series position: {0.5, 0} size: {0.5, 0.5} {
+				data "output in m3/s" value: catchment[0].out_flow/step color: #blue;
 			}
-			chart "catch12" type: series position: {0.5, 0.5} size: {0.5, 0.5} {
-				data "storage in m" value: catchment[12].storage/catchment[12].shape.area color: #green;
+			chart "catch0" type: series position: {0.5, 0.5} size: {0.5, 0.5} {
+				data "storage in m" value: catchment[0].storage/catchment[0].shape.area color: #green;
 			}
 		}
 	}
