@@ -71,6 +71,9 @@ species sense_network skills: [network] {
 		return float(result);
 	}
 	
+	
+	list<map> messages;
+	
 	reflex update when: has_more_message() {
 		
 		message mess <- fetch_message();
@@ -83,6 +86,10 @@ species sense_network skills: [network] {
 		write mess.contents;
 		write lat;
 		write lon;
+		json_file a <- json_file(mess);
+		write a;
+		//map<string, unknown> c <- a.contents;
+		//messages << c;
 		
 		if sensor where (each.name = dev_name) = [] {
 			create sensor {
