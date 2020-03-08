@@ -11,9 +11,9 @@ model mqtt
 
 global {
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	geometry shape <- CRS_transform(envelope(catchment_shape));
-	string messo <- "{\"app_id\":\"smart-stormwater-water-level\",\"dev_id\":\"wl-20\",\"hardware_serial\":\"A81758FFFE045AB1\",\"port\":5,\"counter\":12269,\"payload_raw\":\"AQE6AjUHDisOC8gUAA+OWg==\",\"payload_fields\":{\"distance\":3016,\"humidity\":53,\"pressure\":1019.482,\"temperature\":31.4,\"vdd\":3627},\"metadata\":{\"time\":\"2020-02-28T01:44:59.449293167Z\",\"frequency\":923.2,\"modulation\":\"LORA\",\"data_rate\":\"SF7BW125\",\"airtime\":66816000,\"coding_rate\":\"4/5\",\"gateways\":[{\"gtw_id\":\"eui-00800000a0000b9b\",\"timestamp\":2724810891,\"time\":\"\",\"channel\":0,\"rssi\":-102,\"snr\":-2.8,\"rf_chain\":0,\"latitude\":-34.36688,\"longitude\":150.87569,\"altitude\":9,\"location_source\":\"registry\"}],\"latitude\":-34.39678,\"longitude\":150.9039,\"altitude\":3,\"location_source\":\"registry\"}}";
-
+	file sensor_shape <- file("../../../data/gis/sensor_voronoi.shp");
+	geometry shape <- envelope(catchment_shape);
+	
 	
 	init {
 		create sense_network {
@@ -23,8 +23,11 @@ global {
 			do join_group with_name: "smart-stormwater-water-level/devices/wl-21/up";
 			do join_group with_name: "smart-stormwater-water-level/devices/wl-22/up";
 			do join_group with_name: "smart-stormwater-water-level/devices/wl-23/up";
+			
+			create sensor from: sensor_shape {
+				id <- int(self get "id");
+			}
 		}
-		//ask sense_network[0] {write grab_tag_string(messo, "dev_id");}
 	}
 }
 
@@ -72,53 +75,28 @@ species sense_network skills: [network] {
 	}
 	
 	
-	list<map> messages;
-	
 	reflex update when: has_more_message() {
-		
-		message mess <- fetch_message();
-		
+		message mess <- fetch_message();	
 		string dev_name <- grab_tag_string(mess.contents, "dev_id");
-		float lat <- grab_tag_num(mess.contents, "latitude");
-		float lon <- grab_tag_num(mess.contents, "longitude");
+		float distance_received <- grab_tag_num(mess.contents, "distance");
+		write "recieved: "+ dev_name + " distance: "+distance_received;
+		int ID <- int(replace_regex(dev_name, "[^1234567890]", ""));
 		
-		write "recieved: "+ dev_name;
-		write mess.contents;
-		write lat;
-		write lon;
-		json_file a <- json_file(mess);
-		write a;
-		//map<string, unknown> c <- a.contents;
-		//messages << c;
-		
-		if sensor where (each.name = dev_name) = [] {
-			create sensor {
-				name <- dev_name;
-				location <- point((to_GAMA_CRS({lon, lat})));
-			}
-		}
-		else {
-			ask sensor where (each.name = dev_name) {
-				location <- point((to_GAMA_CRS({lon, lat})));
-			}
-		}
-		
-		//list<geometry> voronois <- voronoi(sensor collect each.location);
-		//write voronois;
-		/*ask sensor {
-			shape <- geometry(voronois where (each overlaps location));
-		}*/
+		ask sensor where (each.id = ID) {
+			distance <- distance_received;
+		}		
 	}
 	
 
 	species sensor {
-		
+		int id;
+		float distance;
 	}
 	
 	aspect default {
 		ask sensor {
-			draw shape border: #black;
-			draw circle(100) at: self.location border: #black color: #blue;
+			draw shape border: #black color: #green depth: distance/100;
+			//draw circle(100) at: self.location border: #black color: #blue;
 		}
 	}
 }
@@ -126,13 +104,13 @@ species sense_network skills: [network] {
 experiment Test type: gui {
 	output {
 		display main type: opengl{
-			species sense_network;
-			//species sensor;
 			graphics "catchment" {
 				loop cat over: catchment_shape {
-					draw to_GAMA_CRS(cat) border: #black;
+					draw cat border: #black;
 				}
 			}
+			
+			species sense_network position: {0, 0, 0.1} transparency: 0.5;			
 		}
 	}
 }

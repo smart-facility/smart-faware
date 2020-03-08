@@ -24,6 +24,10 @@ global {
 	init {
 		create cell from: elevation_shape {
 			height <- float(self get "DN");
+			ask water {
+				shape <- host.shape;
+				location <- location + {0, 0, host.height};
+			}
 		}
 		list altitudes <- cell collect each.height;
 		max_height <- max(altitudes);
@@ -35,9 +39,23 @@ global {
 species cell {
 	float height;
 	
+	init {
+		create water {
+			level <- 0.0;
+		}
+	}
+	
 	aspect default {
 		int colour_val <- int((height-min_height)/(max_height-min_height)*255);
-		draw shape color: rgb(colour_val*matrix(1, 1, 1)) border: rgb((255-colour_val)*matrix(1, 1, 1)) depth: height;
+		draw shape color: #lightgreen depth: height;
+		//draw shape color: rgb(colour_val*matrix(1, 1, 1)) border: rgb((255-colour_val)*matrix(1, 1, 1)) depth: height;
+		ask water {
+			draw shape color: rgb(0, 0, 255, level) depth: level;
+		}
+	}
+	
+	species water {
+		float level;
 	}
 }
 
