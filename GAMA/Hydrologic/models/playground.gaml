@@ -10,113 +10,87 @@ model playground2
 /* Insert your model definition here */
 
 global {
-	file rain_tif <- file("../../../data/gis/rain_grid.tif");
-	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	file rain_csv <- file("../../../data/rain/single.csv");
 	file elevation_tif <- file("../../../data/gis/small_raster.tif");
-	file elevation_shape <- file("../../../data/gis/small_shape.shp");
+	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
 	
-	float source_amount <- 1000.0;
+	geometry shape <- envelope(elevation_tif);
+	float step <- 15#mn;
 	
 	float LAG_PARAM <- 1.61;
-	float step <- #mn/10;
-	geometry shape <- envelope(elevation_shape);
-	
-	float max_height;
-	float min_height;
 	
 	init {
-		ask [cell[10506], cell[10507], cell[10404]] {
-			source <- true;
-		}
-		list altitudes <- cell collect each.height;
-		max_height <- max(altitudes);
-		min_height <- min(altitudes);
-		ask cell where (each.source) {
-			storage <- source_amount;
-			ask water[0] {
-				level <- storage/host.shape.area;
-			}
-			top <- height + water[0].level;
+		ask [land[10506], land[10507], land[10403]] {
+			//source <- true;
+			do take_water(10000.0);
 		}
 	}
 	
-	reflex move_water {
-		loop cel over: cell sort_by each.top {
-			ask cel {
-				list<cell> flow_to <- neighbors where (each.top < top);
-								
-				if flow_to != [] {
-					float total_diff <- sum(top - matrix(flow_to collect each.top));
-					float flow_amm <- min([storage, step*(storage/constant)^(1/0.77)]);
-				
-					ask flow_to {
-						storage <- storage + ((myself.top - top)/total_diff)*flow_amm;
-						ask water {
-							level <- storage/host.shape.area;
-						}
-						top <- height + water[0].level;
-					}
-					
-					if !source {
-						storage <- storage - flow_amm;
-						ask water {
-							level <- storage/host.shape.area;
-						}
-						top <- height + water[0].level;
-					}
-				}
-			}
+	reflex rain {
+		ask land parallel: true {
+			do take_water(20#mm*shape.area);
+		}
+	}
+	
+	reflex update_water {
+		loop cell over: shuffle(land) sort_by each.height {
+			ask cell {do give_water;}
 		}
 	}
 }
 
-
-grid cell file: elevation_tif neighbors: 8{
-	bool source;
+grid land file: elevation_tif neighbors: 8 {
+	float altitude;
 	float height;
-	float top <- height;
-	float storage min: 0.0 max: 2000.0;
-	
-	list<cell> neighbours;
-	
+	bool source;
 	float constant <- LAG_PARAM*((self.shape.area/#km^2)^0.57)#h;
 	
 	init {
-		create water {
-			level <- 0.0;
+		altitude <- grid_value;
+		create water from: [shape] {
+			location <- location + {0, 0, altitude};
+		}
+		height <- altitude + water[0].level;
+	}
+	
+	action give_water {
+		float storage <- water[0].storage;
+		list<land> flow_to <- neighbors where (each.height < height);
+		float total_diff <- sum(flow_to collect (height - each.height));
+		float flow_amm <- min([storage, step*(storage/constant)^(1/0.77)]);
+		
+		ask flow_to {
+			float proportion <- (myself.height - height)/total_diff;
+			do take_water(proportion*flow_amm);
 		}
 		
-		height <- grid_value;
-		top <- height;
-		ask water {
-			shape <- host.shape;
-			location <- location + {0, 0, host.height};
+		if !source {
+			do take_water(-flow_amm);
 		}
-		
-		
-		neighbours <- cell where (each overlaps self);
-		remove self from: neighbours;
+	}
+	
+	action take_water (float amount) {
+		water[0].storage <- water[0].storage + amount;
+		water[0].level <- water[0].storage/shape.area;
+		height <- altitude + water[0].level;
+	}
+	
+	species water {
+		float storage min: 0.0;
+		float level;
 	}
 	
 	aspect default {
-		draw shape color: #lightgreen depth: height;
-		//int colour_val <- int((height-min_height)/(max_height-min_height)*255);
-		//draw shape color: rgb(colour_val*matrix(1, 1, 1)) border: rgb((255-colour_val)*matrix(1, 1, 1)) depth: height;
+		draw shape color: #lightgreen depth: altitude;
 		ask water {
 			draw shape color: rgb(0, 0, 255, int((((bool(level) ? 0.02 : 0) + level/2.5))*255)) depth: level;
 		}
 	}
-	
-	species water {
-		float level;
-	}
 }
 
-experiment test type: gui {
+experiment Visualise type: gui {
 	output {
-		display main type: opengl{
-			species cell;
+		display main type: opengl {
+			species land;
 		}
 	}
 }
