@@ -11,7 +11,7 @@ model mqtt
 
 global {
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	file sensor_shape <- file("../../../data/gis/sensor_voronoi.shp");
+	file sensor_shape <- file("../../../data/gis/Sensors/sensor_voronoi.shp");
 	geometry shape <- envelope(catchment_shape);
 	
 	

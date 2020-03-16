@@ -10,7 +10,7 @@ model playground2
 /* Insert your model definition here */
 
 global {
-	file elevation_tif <- file("../../../data/gis/small_raster.tif");
+	file elevation_tif <- file("../../../data/gis/DEM/urban_grid.tif");
 	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
 	
 	geometry shape <- envelope(elevation_tif);
@@ -91,6 +91,11 @@ experiment Visualise type: gui {
 	output {
 		display main type: opengl {
 			species land;
+			graphics "impervious" position: {0, 0, 0.2} {
+				loop imp over: impervious_shape{
+					draw imp color: #darkgrey;
+				}
+			}
 		}
 	}
 }
