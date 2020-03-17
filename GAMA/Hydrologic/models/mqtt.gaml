@@ -11,7 +11,7 @@ model mqtt
 
 global {
 	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
-	file sensor_shape <- file("../../../data/gis/Sensors/sensor_voronoi.shp");
+	file sensor_shape <- file("../../../data/gis/Sensors/sensors.shp");
 	geometry shape <- envelope(catchment_shape);
 	
 	
@@ -26,6 +26,19 @@ global {
 			
 			create sensor from: sensor_shape {
 				id <- int(self get "id");
+				shape <- circle(10);
+			}
+			
+			ask sensor where (each.id = 2) {
+				max_dist <- 3500.0;
+			}
+			
+			ask sensor where (each.id = 19) {
+				max_dist <- 2000.0;
+			}
+			
+			ask sensor where (each.id = 21) {
+				max_dist <- 4000.0;
 			}
 		}
 	}
@@ -91,11 +104,13 @@ species sense_network skills: [network] {
 	species sensor {
 		int id;
 		float distance;
+		float max_dist <- 5000.0;
+		float level <- max_dist - distance update: max_dist - distance;
 	}
 	
 	aspect default {
 		ask sensor {
-			draw shape border: #black color: #green depth: distance/100;
+			draw shape border: #black color: #blue depth: level/100;
 			//draw circle(100) at: self.location border: #black color: #blue;
 		}
 	}
@@ -106,11 +121,11 @@ experiment Test type: gui {
 		display main type: opengl{
 			graphics "catchment" {
 				loop cat over: catchment_shape {
-					draw cat border: #black;
+					draw cat color: #lightgreen border: #black;
 				}
 			}
 			
-			species sense_network position: {0, 0, 0.1} transparency: 0.5;			
+			species sense_network transparency: 0.5;			
 		}
 	}
 }
