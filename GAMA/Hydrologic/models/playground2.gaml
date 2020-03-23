@@ -1,7 +1,7 @@
 model playground2
 
 global {
-	file dem_file <- file("../../../data/gis/DEM/elevation_half.tif");
+	file dem_file <- file("../../../data/gis/DEM/downsampled.tif");
 	file catch_shape <- file("../../../data/gis/catchment_shape.shp");
 	
 	geometry shape <- envelope(dem_file);

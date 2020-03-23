@@ -10,7 +10,7 @@ model automaton
 /* Insert your model definition here */
 
 global {
-	file elevation_tif <- file("../../../data/gis/DEM/highsample.tif");
+	file elevation_tif <- file("../../../data/gis/DEM/downsampled.tif");
 	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
 	
 	geometry shape <- envelope(elevation_tif);
