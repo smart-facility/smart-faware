@@ -2,7 +2,7 @@ struct Rain_Gauge
     name::String
     latitude::Float64
     longitude::Float64
-    precipitation::Array{Float32}
+    precipitation::Array{Float64}
 end
 
 in_path = "Resources/WBNM2017_v001/WBNM 1998/190917_FCT_CS08a_STR02_August1998_RF11.wbn"
