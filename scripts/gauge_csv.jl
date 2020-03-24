@@ -34,5 +34,5 @@ end
 write(file_out, "name,id,latitude,longitude,"*join(gauges[1].steps, ",")*"\n")
 for gauge in gauges
     gauge = gauge[2]
-    write(file_out, gauge.name*","*string(gauge.id)*","*string(gauge.lat)*","*string(gauge.lon)*join(gauge.precip, ",")*"\n")
+    write(file_out, gauge.name*","*string(gauge.id)*","*string(gauge.lat)*","*string(gauge.lon)*","*join(gauge.precip, ",")*"\n")
 end

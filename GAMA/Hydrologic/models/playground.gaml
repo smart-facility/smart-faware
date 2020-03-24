@@ -8,13 +8,15 @@ global {
 	
 	init {
 		matrix raintrix <- matrix(rain_data);
-		list precipitation <- raintrix row_at 0;
-		write type_of(raintrix[1]);
-		precipitation >>- precipitation select (!is_number(replace_regex(string(each), "[-:]", "")));
-		write raintrix index_of "568317";
+		//list precipitation <- raintrix row_at 0;
+		//precipitation >>- precipitation select (!is_number(replace_regex(string(each), "[-:]", "")));
+		//write raintrix index_of "568317";
+		/*
 		loop timestep over: precipitation {
 			//write raintrix at (raintrix index_of timestep + {0, 4});
 		}
+		* */
+		/*
 		create rain {
 			id <- 568317;
 			index <- raintrix index_of string(id) - {1, 0};
@@ -24,6 +26,7 @@ global {
 			write lon;
 			location <- point({lon, lat});
 		}
+		* */
 	}
 }
 
