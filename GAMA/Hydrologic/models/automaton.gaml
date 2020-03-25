@@ -10,7 +10,7 @@ model automaton
 /* Insert your model definition here */
 
 global {
-	file elevation_tif <- file("../../../data/gis/DEM/downsampled.tif");
+	file elevation_tif <- file("../../../data/gis/DEM/high_res.tif");
 	file impervious_shape <- file("../../../data/gis/impervious_shape.shp");
 	
 	geometry shape <- envelope(elevation_tif);
@@ -91,7 +91,7 @@ grid land file: elevation_tif neighbors: 8 {
 experiment Visualise type: gui {
 	output {
 		display main type: opengl {
-			species land;
+			species land refresh: false;
 			graphics "impervious" position: {0, 0, 0.2} {
 				loop imp over: impervious_shape{
 					draw imp color: #darkgrey;
@@ -99,4 +99,8 @@ experiment Visualise type: gui {
 			}
 		}
 	}
+}
+
+experiment CreateData type: gui {
+	
 }
