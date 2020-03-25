@@ -14,7 +14,7 @@ global {
 	init {
 		matrix raintrix <- matrix(rain_data);
 		list global_steps <- raintrix row_at 0;
-		global_steps >>- global_steps select (!is_number(replace_regex(string(each), "[-:]", "")));
+		global_steps >>- global_steps select (!is_number(replace_regex(string(each), "[^1234567890]", "")));
 		
 		list ids <- raintrix column_at 1;
 		ids >>- "id";

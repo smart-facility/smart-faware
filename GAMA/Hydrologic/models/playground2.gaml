@@ -11,7 +11,7 @@ global {
 	
 	init {
 		matrix levels <- matrix(level_data);
-		list global_steps <- (levels row_at 0) select (is_number(replace_regex(string(each), "[:-]", "")));
+		list global_steps <- (levels row_at 0) select (is_number(replace_regex(string(each), "[^1234567890]", "")));
 		
 		create catchment from: catchment_shape;
 		create level_sensor from: sensor_shape {

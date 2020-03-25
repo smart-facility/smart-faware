@@ -9,7 +9,7 @@ out_path = try
 file = open(in_path, "r")
 file_content = read(file, String)
 file_check = eachmatch(r"(?<day>\d{1,2})/(?<month>\d{1,2})/(?<year>\d{4}) (?<hour>\d{1,2}):(?<minute>\d{1,2}),(?<wl19>\d{0,9}.?\d{0,9}),(?<wl2>\d{0,9}.?\d{0,9}),(?<wl21>\d{0,9}.?\d{0,9})", file_content)
-timesteps = [x[:year]*"-"*x[:month]*"-"*x[:day]*" "*x[:hour]*":"*x[:minute] for x in file_check]
+timesteps = [replace(x[:year]*"-"*x[:month]*"-"*x[:day]*" "*x[:hour]*":"*x[:minute], r"\D(\d):(\d{2})" => s" 0\1:\2") for x in file_check]
 
 data = Dict()
 data["19"] = [each[:wl19] for each in file_check]
