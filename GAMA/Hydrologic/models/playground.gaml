@@ -7,17 +7,13 @@ global {
 	
 	geometry shape <- envelope(rain_cells);
 	
-	float step <- 5#mn;
+	float step <- 60#mn;
 	
 	date starting_date <- date("20200201");
 	
 	init {
 		matrix raintrix <- matrix(rain_data);
-		list global_steps <- raintrix row_at 0;
-		global_steps >>- global_steps select (!is_number(replace_regex(string(each), "[^1234567890]", "")));
-		
-		list ids <- raintrix column_at 1;
-		ids >>- "id";
+		list global_steps <- (raintrix row_at 0) select (is_number(replace_regex(string(each), "[^1234567890]", "")));
 		
 		create catchment from: catchments;
 		
@@ -44,24 +40,27 @@ species rain {
 	list<date> timesteps;
 	list<float> precipitation;
 	float precip_now;
-	
-	reflex pause when: length(timesteps) = 2 {
-		ask host {
-			do pause;
-		}
 		
-	}
 	
-	reflex do_rain when: timesteps[0] <= current_date {
-		precip_now <- precipitation[0];
-		timesteps[] >>- 0;
-		precipitation[] >>- 0;
+	reflex rain_batch when: (timesteps != []) and (timesteps[0] <= current_date) {
+		list batch <- timesteps select (each <= current_date);
+		precip_now <- 0.0;
+		int index;
+		list indices;
+		
+		loop steppy over: batch {
+			index <- timesteps index_of steppy;
+			precip_now <- precip_now + precipitation at index;
+			indices << index;
+		}
+		timesteps[] >>- indices;
+		precipitation[] >>- indices;
 	}
 	
 	
 	aspect default {
 		rgb precip_colour;
-		switch precip_now {
+		switch (precip_now#h)/step {
 			match_between [0, 0.2] {precip_colour <- rgb(0,0,0,0);}
 			match_between [0.2, 0.5] {precip_colour <- #white;}
 			match_between [0.5, 1.5] {precip_colour <- #skyblue;}

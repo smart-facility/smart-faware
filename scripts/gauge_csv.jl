@@ -21,7 +21,7 @@ for (index, file_name) in enumerate(data_files)
     file = open(file_path, "r")
     file_content = read(file, String)
     data = eachmatch(r"(\d{2}/\d{2}/\d{4},\d{2}:\d{2}:\d{2}),(\d{1,4}.\d{1,4}),150", file_content)
-    gauge_content = [parse(Float64, x.captures[2])*12 for x in data]
+    gauge_content = [parse(Float64, x.captures[2]) for x in data]
     timesteps = [replace(x.captures[1], "," => "-") for x in data]
     timesteps = [x[7:10]*"-"*x[4:5]*"-"*x[1:2]*" "*x[12:end] for x in timesteps]
     station_name = match(r"Station Name, (.*)\r", file_content).captures[1]

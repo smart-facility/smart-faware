@@ -3,7 +3,7 @@ model playground2
 global {
 	csv_file level_data <- csv_file("../../../data/rain/water_levels_formatted.csv");
 	file sensor_shape <- file("../../../data/gis/Sensors/sensors.shp");
-	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
+	file catchment_shape <- shape_file("../../../data/gis/3dshape.shp", true);
 	
 	geometry shape <- envelope(catchment_shape);
 	
@@ -47,7 +47,7 @@ species level_sensor {
 	
 	float data_now;
 	
-	reflex update when: false and (current_date >= timesteps[0]) and (length(timesteps) > 2) {
+	reflex update when: false and (timesteps != []) and (current_date >= timesteps[0]) {
 		if data[0] != "" {
 			data_now <- max_dist - float(data[0]);
 		}
@@ -56,7 +56,7 @@ species level_sensor {
 		
 	}
 	
-	reflex update_batch when: (current_date >= timesteps[0]) and (length(timesteps) > 0) {
+	reflex update_batch when: (timesteps != []) and (current_date >= timesteps[0]) {
 		list batch <- timesteps select (each <= current_date);
 		list<int> indices;
 		loop item over: batch {
@@ -75,11 +75,17 @@ species level_sensor {
 	}
 	
 	aspect default {
-		draw circle(30) border: #black color: #blue depth: data_now/50;
+		draw circle(30) border: #black color: #blue depth: data_now/25;
 	}
 }
 
 species catchment {
+	int id <- int(self get "ID");
+	
+	
+	init {
+		
+	}
 	
 	aspect default {
 		draw shape color: #lightgreen border: #black;
@@ -90,7 +96,7 @@ experiment Visualise {
 	output {
 		display main type: opengl {
 			species catchment;
-			species level_sensor;
+			species level_sensor position: {0, 0, 1e-3};
 		}
 	}
 }

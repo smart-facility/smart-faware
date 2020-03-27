@@ -5,7 +5,7 @@ global {
 	 * Here listed are all the files responsible for initialising the model
 	 */
 	file rain_tif <- file("../../../data/gis/rain_grid.tif");
-	file catchment_shape <- file("../../../data/gis/catchment_shape.shp");
+	file catchment_shape <- shape_file("../../../data/gis/catchment_shape.shp");
 	file rain_csv <- file("../../../data/rain/single.csv");
 	
 	/*

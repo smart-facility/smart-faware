@@ -5,12 +5,7 @@ import csv
 import sys, os
 import re
 gdal.PushErrorHandler('CPLQuietErrorHandler')
-'''add option to give filename or path to 
-create csv file
-
-create load function to be used in load folder, and by itself to minimise code
-repeated
-
+'''
 add in more functionality/capability to interpret timestamps, fill in data
 between, split output to multiple csvs etc
 '''
@@ -85,13 +80,6 @@ def write_csv(array, name):
 file_in = sys.argv[1]
 file_out = sys.argv[2]
 #%%
-'''
-root = os.path.realpath(__file__+"/../..")
-sys.path.append(root)
-
-file_in = os.path.join(root, "smart-faware/data/rain/rainfield_files/05")
-file_out = os.path.join(root, "smart-faware/data/rain/test.csv")
-'''
 print(file_in)
 print(file_out)
 
@@ -107,13 +95,3 @@ else:
     exit()
 
 write_csv(array, file_out)
-'''
-name_in = "blahblah.nc"
-
-root = os.path.realpath(__file__+"/../..")
-sys.path.append(root)
-folder_name = root+"/"+"data/rain/Rainfield_Files/05"
-#array = load_nc(folder_name)
-#write_csv(array)
-'''
-# %%dataset = gdal.Open(file, gdal.GA_ReadOnly)
