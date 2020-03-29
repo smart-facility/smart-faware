@@ -43,7 +43,7 @@ global {
 	 	list levels_timesteps <- (levels row_at 0) select (is_number(replace_regex(string(each), "[^1234567890]", "")));
 	 	create level_sensor from: sensors_gis {
 	 		point index <- levels index_of string(id) - levels index_of "id";
-	 		if index = levels index_of "id" {do die;}
+	 		if index = -(levels index_of "id") {do die;}
 	 		data <- host.data_from_csv(levels, id);
 	 		timesteps <- levels_timesteps;
 	 	}
@@ -59,7 +59,7 @@ global {
 			max_dist <- 4000.0;
 		}
 	 }
-	 
+	  
 	 list<float> data_from_csv (matrix input, int id) {
 	 	list timesteps <- (input row_at 0) select (is_number(replace_regex(string(each), "[^1234567890]", "")));
 	 	point index <- input index_of string(id) - input index_of "id";
@@ -105,9 +105,9 @@ species cloud {
 	
 	aspect default {
 		rgb precip_colour;
-		switch precip_now {
-			match_between [0, 0.2] {precip_colour <- rgb(0,0,0,0);}
-			match_between [0.2, 0.5] {precip_colour <- #white;}
+		switch (precip_now#h)/step {
+			match_between [0, 0.02] {precip_colour <- rgb(0,0,0,0);}
+			match_between [0.02, 0.5] {precip_colour <- #white;}
 			match_between [0.5, 1.5] {precip_colour <- #skyblue;}
 			match_between [1.5, 2.5] {precip_colour <- #lightblue;}
 			match_between [2.5, 4] {precip_colour <- #blue;}
@@ -172,7 +172,7 @@ species catchment {
 		ask sub_catch {
 			draw shape border: #black color: #lightgreen;
 			float level <- storage*1000/self.shape.area;
-			draw shape at: location + {0, 0, 1e2} color: rgb(0,0,255, sqrt(level)/10) depth: level;
+			draw shape at: location + {0, 0, 1e2} color: rgb(0,0,255, sqrt(level)/20) depth: level;
 		}
 	}
 }
@@ -181,12 +181,16 @@ species level_sensor {
 	int id;
 	float max_dist;
 	
+	rgb colour <- #red;
+	date last_update <- starting_date;
+	
 	list<date> timesteps;
 	list data;
 	
 	float data_now;
 	
 	reflex update_batch when: (timesteps != []) and (current_date >= timesteps[0]) {
+		colour <- #blue;
 		list batch <- timesteps select (each <= current_date);
 		list<int> indices;
 		loop item over: batch {
@@ -198,6 +202,13 @@ species level_sensor {
 		}
 		timesteps[] >>- indices;
 		data[] >>- indices;
+		
+		last_update <- current_date;
+	}
+	
+	reflex data_old when: last_update + 1#day < current_date {
+		colour <- #red;
+		data_now <- 0.0;
 	}
 	
 	init {
@@ -205,7 +216,7 @@ species level_sensor {
 	}
 	
 	aspect default {
-		draw circle(30) border: #black color: #blue depth: data_now/25;
+		draw circle(30) border: #black color: colour depth: data_now/25;
 	}
 }
 
@@ -214,7 +225,45 @@ experiment Visualise type: gui {
 		display main type: opengl {
 			species catchment;
 			species level_sensor position: {0, 0, 0.1};
-			species cloud position: {0, 0, 0.5} transparency: 0.5;
+			species cloud position: {0, 0, 0.15} transparency: 0.5;
+		}
+	}
+}
+
+experiment Export type: gui {
+	string output_file <- "../output/out_compare.csv";
+	
+	init {
+		list columns;
+		columns << "time";
+		
+		ask level_sensor {
+			columns << "wl-"+string(id);
+			ask catchment[0].sub_catch where (each overlaps self) {
+				columns << "wl-"+string(myself.id)+"_catchment";
+			}
+		}
+		save columns to: output_file rewrite: true type: "csv" header: false;
+	}
+	
+	reflex save {
+		list columns;
+		columns << string(current_date);
+		
+		ask level_sensor {
+			columns << data_now;
+			ask catchment[0].sub_catch where (each overlaps self) {
+				columns << storage;
+			}
+		}
+		save columns to: output_file rewrite: false type: "csv" header: false;
+	}
+	
+	output {
+		display main type: opengl {
+			species catchment;
+			species level_sensor position: {0, 0, 0.1};
+			species cloud position: {0, 0, 0.15} transparency: 0.5;
 		}
 	}
 }
