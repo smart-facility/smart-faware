@@ -88,7 +88,7 @@ species catchment {
 	}
 	
 	aspect default {
-		draw shape color: #lightgreen border: #black;
+		draw shape color: #lightgreen border: #black depth: 20;
 	}
 }
 
