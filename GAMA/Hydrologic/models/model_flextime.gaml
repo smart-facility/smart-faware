@@ -7,6 +7,7 @@ global {
 	 file clouds_gis <- file("../../../data/gis/mhl/mhl_voronoi.shp");
 	 file clouds_csv <- file("../../../data/rain/gauges.csv");
 	 file catchments_gis <- file("../../../data/gis/catchment_shape.shp");
+	 file catchments_3d <- shape_file("../../../data/gis/3dshape.shp", true);
 	 file sensors_gis <- file("../../../data/gis/Sensors/sensors.shp");
 	 file sensors_csv <- file("../../../data/rain/water_levels_formatted.csv");
 	 
@@ -20,7 +21,9 @@ global {
 	 
 	 init {
 	 	create catchment {
-	 		create sub_catch from: catchments_gis;
+	 		create sub_catch from: catchments_gis {
+	 			shape_3d <- one_of(catchments_3d where (each get "ID" = self get "ID"));
+	 		}
 	 		outlet <- one_of(sub_catch where (each.downstream = nil));
 	 		ask sub_catch {upstream <- sub_catch where (each.downstream = self);}
 	 	}
@@ -70,6 +73,8 @@ global {
 	 	return output;
 	 }
 }
+
+
 
 species cloud {
 	
@@ -126,6 +131,9 @@ species cloud {
 		draw shape color: precip_colour;
 	}
 }
+
+
+
 /* catchment is a species to control all global aspects of the entire catchment,
  * with subspecies sub_catch controlling aspects local to each sub catchment.
  */
@@ -142,6 +150,8 @@ species catchment {
 		sub_catch downstream <- is_number(string(self get "DOWNSTREAM")) ? sub_catch[int(self get "DOWNSTREAM")-1] : nil;
 		list<sub_catch> upstream;
 		float constant <- LAG_PARAM*((self.shape.area/#km^2)^0.57)#h;
+		
+		geometry shape_3d;
 		
 		float in_flow <- 0.0;
 		float out_flow <- 0.0;
@@ -167,7 +177,6 @@ species catchment {
 			}
 		}
 	}
-	
 	aspect default {
 		ask sub_catch {
 			draw shape border: #black color: #lightgreen;
@@ -175,7 +184,17 @@ species catchment {
 			draw shape at: location + {0, 0, 1e2} color: rgb(0,0,255, sqrt(level)/20) depth: level;
 		}
 	}
+
+	aspect catch_3d {
+		ask sub_catch {
+			draw shape_3d border: #black color: #lightgreen;
+			float level <- storage*1000/self.shape.area;
+			draw shape_3d at: shape_3d.centroid + {0, 0, 10} color: rgb(0,0,255, sqrt(level)/20) depth: level;
+		}
+	}
 }
+
+
 
 species level_sensor {
 	int id;
@@ -216,19 +235,23 @@ species level_sensor {
 	}
 	
 	aspect default {
-		draw circle(30) border: #black color: colour depth: data_now/25;
+		draw circle(30) border: #black color: colour depth: data_now/6;
 	}
 }
+
+
 
 experiment Visualise type: gui {
 	output {
 		display main type: opengl {
-			species catchment;
-			species level_sensor position: {0, 0, 0.1};
+			species catchment aspect: catch_3d;
+			species level_sensor position: {0, 0, 1e-3};
 			species cloud position: {0, 0, 0.15} transparency: 0.5;
 		}
 	}
 }
+
+
 
 experiment Export type: gui {
 	string output_file <- "../output/out_compare.csv";
@@ -261,8 +284,8 @@ experiment Export type: gui {
 	
 	output {
 		display main type: opengl {
-			species catchment;
-			species level_sensor position: {0, 0, 0.1};
+			species catchment aspect: catch_3d;
+			species level_sensor position: {0, 0, 1e-3};
 			species cloud position: {0, 0, 0.15} transparency: 0.5;
 		}
 	}
