@@ -1,8 +1,7 @@
-/GAMA/.metadata
+GAMA/.metadata
 GAMA/.cache
 .built*
 .gama*
-/GAMA/.gama.epf
 /.vscode
 
 *.nc
