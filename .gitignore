@@ -1,9 +1,14 @@
+/GAMA/.metadata
+GAMA/.cache
+.built*
+.gama*
+/GAMA/.gama.epf
+/.vscode
+
 *.nc
 /data/data_archives
 /data/rain/rainfield_files
-/GAMA/.metadata
-/.vscode
-/GAMA/.gama.epf
+
 /Resources
 /data/gis/DEM/high_res.tif
 /data/gis/test3.tif
