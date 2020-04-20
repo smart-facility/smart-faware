@@ -4,12 +4,12 @@ global {
 	/*First all GIS files and CSV data are imported to initialise catchments,
 	 *  clouds, water levels, etc
 	 */
-	 file clouds_gis <- file("../../../data/gis/mhl/mhl_voronoi.shp");
-	 file clouds_csv <- file("../../../data/rain/gauges.csv");
-	 file catchments_gis <- file("../../../data/gis/catchment_shape.shp");
-	 file catchments_3d <- shape_file("../../../data/gis/3dshape.shp", true);
-	 file sensors_gis <- file("../../../data/gis/Sensors/sensors.shp");
-	 file sensors_csv <- file("../../../data/rain/water_levels_formatted.csv");
+	 file clouds_gis <- file("../../../data/model/mhl/mhl_voronoi.shp");
+	 file clouds_csv <- file("../../../data/experiments/SMART Data/rain_in/gauges.csv");
+	 file catchments_gis <- file("../../../data/model/catchment_shape.shp");
+	 file catchments_3d <- shape_file("../../../data/model/3dshape.shp", true);
+	 file sensors_gis <- file("../../../data/model/Sensors/sensors.shp");
+	 file sensors_csv <- file("../../../data/experiments/SMART Data/validation/water_levels_formatted.csv");
 	 
 	 /*Constants relating to flow of water from catchments, and any others etc */
 	 float LAG_PARAM <- 1.61;
