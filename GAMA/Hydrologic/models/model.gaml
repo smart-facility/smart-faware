@@ -2,17 +2,64 @@ model hydrologic
 
 global {
 	string mode <- "../../../data/model/";
-	string expe <- "../../../data/experiments/1998-2012 MHL/";
+	string expe <- "../../../data/experiments/1998-2012_MHL/";
 	
 	//Model Data
 	file catchment_gis <- file(mode+"catchment_shape.shp");
+	file catchment_3d <- shape_file(mode+"3dshape.shp", true);
 	geometry shape <- envelope(catchment_gis);
-	float step parameter: step <- 10#mn;
-	 date starting_date <- date("20181004 23:00");
+	
+	float step parameter: step <- 5#mn;
+	date starting_date <- date("19980817");
 	
 	//Experiment Data
-	file cloud_gis <- file(expe+"mhl/mhl_voronoi.shp");
-	file cloud_csv <- file(expe+"rain_in/1998.csv");
+	file cloud_gis <- file(expe+"rain_in/voronoi.shp");
+	file cloud_csv <- file(expe+"rain_in/rain.csv");
+	
+	file sensor_gis <- file(expe+"validation/coords.shp");
+	file sensor_csv <- file(expe+"validation/level.csv");
+	
+	//Constants etc
+	float LAG_PARAM <- 1.61;
+	
+		
+	init {
+		//Initialise Catchments
+		create catchment {
+	 		create sub_catch from: catchment_gis {
+	 			shape_3d <- one_of(catchment_3d where (each get "ID" = self get "ID"));
+	 		}
+	 		outlet <- one_of(sub_catch where (each.downstream = nil));
+	 		ask sub_catch {upstream <- sub_catch where (each.downstream = self);}
+	 	}
+		
+		
+		//Initialise Clouds
+		map cloud_data <- get_data(cloud_csv);
+		
+		loop spot over: cloud_gis {
+			create cloud from: container<geometry>(spot) {
+				int id <- int(self get "id");
+				if id = 0 {
+					id <- int(replace(self.name, "cloud", ""));
+				}
+				data <- cloud_data[id]["data"];
+				
+				loop cat over: catchment[0].sub_catch where (each overlaps self) {
+	 				create sub_cloud from: [cat inter self] {
+	 					target <- cat;
+	 				}
+	 			}
+			}
+		}
+		
+		//Initialise Sensors
+		map sensor_data <- get_data(sensor_csv);
+		create sensor from: sensor_gis {
+			data <- sensor_data[id]["data"];
+			
+		}
+	}
 	
 	//CSV Data importer
 	map<int, map> get_data (file csv_in) {
@@ -30,23 +77,6 @@ global {
 		}
 		return output;
 	}
-	
-	
-	init {
-		create catchment from: catchment_gis;
-		
-		map cloud_data <- get_data(cloud_csv);
-		
-		loop spot over: cloud_gis {
-			create cloud from: container<geometry>(spot) {
-				int id <- int(self get "id");
-				if id = 0 {
-					id <- int(replace(self.name, "cloud", ""));
-				}
-				data <- cloud_data[id]["data"];
-			}
-		}
-	}
 }
 
 species cloud {
@@ -58,6 +88,17 @@ species cloud {
 		list times <- data.keys where ((each >= current_date) and (each < current_date + step));
 		loop timey over: times {
 			precip_now <- precip_now + data[timey];
+		}
+	}
+	
+	species sub_cloud {
+		sub_catch target;
+		
+		reflex rain {
+			float send <- host.precip_now#mm*shape.area;
+			ask target {
+				storage <- storage + send;
+			}
 		}
 	}
 	
@@ -85,10 +126,94 @@ species cloud {
 	}
 }
 
-species catchment {
+species sensor {
+	int id;
+		
+	rgb colour <- #red;
+	date last_update <- starting_date;
+	
+	map<date, float> data;
+	float data_now;
+	
+	reflex update when: (data.keys where ((each >= current_date) and (each < current_date + step))) != []{
+		colour <- #blue;
+		list levels;
+		list times <- data.keys where ((each >= current_date) and (each < current_date + step));
+		loop timey over: times {
+			levels <+ data[timey];
+		}
+		data_now <- float(max(levels));
+		last_update <- current_date;
+	}
+	
+	reflex data_old when: last_update + 1#day < current_date {
+		colour <- #red;
+		data_now <- 0.0;
+	}
+	
+	init {
+		id <- int(self get "id");
+	}
 	
 	aspect default {
-		draw shape color: #lightgreen border: #black;
+		draw circle(30) border: #black color: colour depth: data_now*10;
+	}
+}
+
+species catchment {
+	sub_catch outlet;
+	
+	reflex flow {
+		ask outlet {
+			do flow;
+		}
+	}
+	
+	species sub_catch {
+		sub_catch downstream <- is_number(string(self get "DOWNSTREAM")) ? sub_catch[int(self get "DOWNSTREAM")-1] : nil;
+		list<sub_catch> upstream;
+		float constant <- LAG_PARAM*((self.shape.area/#km^2)^0.57)#h;
+		
+		geometry shape_3d;
+		
+		float in_flow <- 0.0;
+		float out_flow <- 0.0;
+		float storage <- 0.0;
+		
+		action flow {
+			if upstream != [] {
+				ask upstream {do flow;}
+			}
+			storage <- storage + in_flow;
+			if storage != 0 {
+				out_flow <- step*(storage/constant)^(1/0.77);
+			}
+			else {
+				out_flow <- 0.0;
+			}
+			storage <- storage - out_flow;
+			in_flow <- 0.0;
+			if downstream != nil {
+				ask downstream {
+					self.in_flow <- self.in_flow + myself.out_flow;
+				}
+			}
+		}
+	}
+	aspect default {
+		ask sub_catch {
+			draw shape border: #black color: #lightgreen;
+			float level <- storage*1000/self.shape.area;
+			draw shape at: location + {0, 0, 1e2} color: rgb(0,0,255, sqrt(level)/20) depth: level;
+		}
+	}
+
+	aspect catch_3d {
+		ask sub_catch {
+			draw shape_3d border: #black color: #lightgreen;
+			float level <- storage*1000/self.shape.area;
+			draw shape_3d at: shape_3d.centroid + {0, 0, 10} color: rgb(0,0,255, sqrt(level)/20) depth: level;
+		}
 	}
 }
 
@@ -96,7 +221,8 @@ species catchment {
 experiment Visualise type: gui {
 	output {
 		display main type: opengl {
-			species catchment;
+			species catchment aspect: catch_3d;
+			species sensor position: {0, 0, 0.1};
 			species cloud position: {0, 0, 0.4} transparency: 0.5;
 		}
 	}

@@ -51,6 +51,7 @@ def load(inputs):
 
     return data_for_ids
 
+###WRITE LOADED DATA TO CSV
 def write_csv(data, output):
     ids = list(data.keys())
     file = open(output, "w")
