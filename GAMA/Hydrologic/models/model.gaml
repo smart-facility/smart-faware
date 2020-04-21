@@ -11,6 +11,7 @@ global {
 	
 	float step parameter: step <- 5#mn;
 	date starting_date <- date("19980817");
+	date stopping_date <- date("19980818 12:00");
 	
 	//Experiment Data
 	file cloud_gis <- file(expe+"rain_in/voronoi.shp");
@@ -98,6 +99,7 @@ species cloud {
 			float send <- host.precip_now#mm*shape.area;
 			ask target {
 				storage <- storage + send;
+				rain_in <- rain_in + send;
 			}
 		}
 	}
@@ -176,6 +178,8 @@ species catchment {
 		
 		geometry shape_3d;
 		
+		float rain_in;
+				
 		float in_flow <- 0.0;
 		float out_flow <- 0.0;
 		float storage <- 0.0;
@@ -225,5 +229,36 @@ experiment Visualise type: gui {
 			species sensor position: {0, 0, 0.1};
 			species cloud position: {0, 0, 0.4} transparency: 0.5;
 		}
+		display charts refresh: every (1#cycle) {
+			chart "catch36" type: series {
+				data "rain input in m^3" value: catchment[0].sub_catch[36].rain_in;
+			}
+		}
+	}
+}
+
+experiment cum_rain type: gui {
+	string file_out <- "c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/cum_rain.csv";
+	init {
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
+	}
+	
+	reflex write when: (current_date <= stopping_date){
+		list values;
+		loop cat over: catchment[0].sub_catch {
+			values <+ cat.rain_in / cat.shape.area;
+		}
+		save [string(current_date)] + values  to: file_out rewrite: false type: "csv";
+	}
+}
+
+experiment storage type: gui {
+	string file_out <- "c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage.csv";
+	init {
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
+	}
+	
+	reflex write when: (current_date <= stopping_date){
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.storage)) to: file_out rewrite: false type: "csv";
 	}
 }

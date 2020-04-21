@@ -15,4 +15,16 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>msi.gama.application.gamaNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>external/all.csv</name>
+			<type>1</type>
+			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/all.csv</location>
+		</link>
+		<link>
+			<name>external/storage.csv</name>
+			<type>1</type>
+			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage.csv</location>
+		</link>
+	</linkedResources>
 </projectDescription>
