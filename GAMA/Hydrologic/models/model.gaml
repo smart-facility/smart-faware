@@ -96,7 +96,7 @@ species cloud {
 		sub_catch target;
 		
 		reflex rain {
-			float send <- host.precip_now#mm*shape.area;
+			float send <- host.precip_now#mm*self.shape.area;
 			ask target {
 				storage <- storage + send;
 				rain_in <- rain_in + send;
@@ -130,7 +130,8 @@ species cloud {
 
 species sensor {
 	int id;
-		
+	point outlet;
+	
 	rgb colour <- #red;
 	date last_update <- starting_date;
 	
@@ -219,6 +220,13 @@ species catchment {
 			draw shape_3d at: shape_3d.centroid + {0, 0, 10} color: rgb(0,0,255, sqrt(level)/20) depth: level;
 		}
 	}
+	aspect debug {
+		ask sub_catch {
+			draw shape border: #black color: #lightgreen;
+			float level <- storage*1000/self.shape.area;
+			draw shape at: location + {0, 0, 1e2} color: rgb(0,0,255, sqrt(storage/1000)/20) depth: storage/1000;
+		}
+	}
 }
 
 
@@ -229,11 +237,26 @@ experiment Visualise type: gui {
 			species sensor position: {0, 0, 0.1};
 			species cloud position: {0, 0, 0.4} transparency: 0.5;
 		}
-		display charts refresh: every (1#cycle) {
-			chart "catch36" type: series {
-				data "rain input in m^3" value: catchment[0].sub_catch[36].rain_in;
+	}
+}
+
+experiment debug type: gui {
+	output {
+		display main type: opengl {
+			species catchment aspect: debug;
+			graphics "connections" position: {0, 0, 0.025} {
+				loop cat over: catchment[0].sub_catch {
+					draw line(cat.location, cat.downstream.location) color: #blue width: 2;
+					draw sphere(50) color: #darkblue at: cat.location;
+				}
 			}
+			species sensor position: {0, 0, 0.1};
+			species cloud position: {0, 0, 0.4} transparency: 0.5;
+			
 		}
+	}
+	reflex values {
+		write catchment[0].sub_catch[36].in_flow;
 	}
 }
 
@@ -260,5 +283,19 @@ experiment storage type: gui {
 	
 	reflex write when: (current_date <= stopping_date){
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.storage)) to: file_out rewrite: false type: "csv";
+	}
+}
+
+experiment maplabels type: gui {
+	file outlets <- file(mode+"nodes_points_catchment.shp");
+	output {
+		display catchment_labels {
+			species catchment;
+			graphics "names" {
+				loop cat over: catchment[0].sub_catch {
+					draw replace(cat.name, "sub_catch", "") font: font("Helvetica", 25, #plain) at: one_of(container<point>(outlets) where (each overlaps cat));
+				}
+			}
+		}
 	}
 }

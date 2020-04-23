@@ -26,5 +26,10 @@
 			<type>1</type>
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage.csv</location>
 		</link>
+		<link>
+			<name>external/storage_08.csv</name>
+			<type>1</type>
+			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage_08.csv</location>
+		</link>
 	</linkedResources>
 </projectDescription>
