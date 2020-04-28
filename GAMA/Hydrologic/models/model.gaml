@@ -2,7 +2,7 @@ model hydrologic
 
 global {
 	string mode <- "../../../data/model/";
-	string expe <- "../../../data/experiments/1998-2012_MHL/";
+	string expe <- "../../../data/experiments/WBNM_98/";
 	
 	//Model Data
 	file catchment_gis <- file(mode+"catchment_shape.shp");
@@ -44,7 +44,12 @@ global {
 				if id = 0 {
 					id <- int(replace(self.name, "cloud", ""));
 				}
-				data <- cloud_data[id]["data"];
+				if id in cloud_data.keys {
+					data <- cloud_data[id]["data"];
+				}
+				else {
+					do die;
+				}
 				
 				loop cat over: catchment[0].sub_catch where (each overlaps self) {
 	 				create sub_cloud from: [cat inter self] {
@@ -242,12 +247,13 @@ experiment Visualise type: gui {
 
 experiment debug type: gui {
 	output {
-		display main type: opengl {
+		display main type: opengl background: #black {
 			species catchment aspect: debug;
 			graphics "connections" position: {0, 0, 0.025} {
 				loop cat over: catchment[0].sub_catch {
 					draw line(cat.location, cat.downstream.location) color: #blue width: 2;
 					draw sphere(50) color: #darkblue at: cat.location;
+					draw replace(cat.name, "sub_", "") color: #red font: font("Helvetica", 32, #plain) at: cat.location;
 				}
 			}
 			species sensor position: {0, 0, 0.1};
@@ -261,7 +267,7 @@ experiment debug type: gui {
 }
 
 experiment cum_rain type: gui {
-	string file_out <- "c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/cum_rain.csv";
+	string file_out <- string(file(expe+"/output/cum_rain.csv"));
 	init {
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
 	}
@@ -276,13 +282,24 @@ experiment cum_rain type: gui {
 }
 
 experiment storage type: gui {
-	string file_out <- "c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage.csv";
+	string file_out <- string(file(expe+"/output/storage.csv"));
 	init {
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
 	}
 	
 	reflex write when: (current_date <= stopping_date){
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.storage)) to: file_out rewrite: false type: "csv";
+	}
+}
+
+experiment outflow type: gui {
+	string file_out <- string(file(expe+"/output/outflow.csv"));
+	init {
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
+	}
+	
+	reflex write when: (current_date <= stopping_date){
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.out_flow/step)) to: file_out rewrite: false type: "csv";
 	}
 }
 
