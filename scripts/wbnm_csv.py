@@ -31,7 +31,7 @@ def load(inputs):
         data = file_in.read()
         gauges_section = re.findall(r"#####START_RECORDED_RAIN(?s).*#####END_RECORDED_RAIN", data)[0]
         date_string, num_gauge, mins, = re.findall(r"(\d{2}/\d{2}/\d{4})\n.*\n\s*(\d{1,4})\s*(\d{1,4}.?\d{1,4})\nMM/HR", gauges_section)[0]
-        start_date = datetime.datetime.strptime(date_string, "%d/%m/%Y")
+        start_date = datetime.datetime.strptime(date_string, "%d/%m/%Y") + datetime.timedelta(hours=9)
         mins = float(mins)
         num_gauge = int(num_gauge)
         gauges = re.findall(rf"(.*\n.*\d{{4,8}}.\d{{1,3}}  \d{{4,8}}.\d{{1,3}}\n(?:.*?\d{{1,4}}.\d{{2}}\n){{{num_gauge}}})", gauges_section)
@@ -47,7 +47,7 @@ def load(inputs):
             current_date = start_date
             for point in data_points:
                 data_for_dates[current_date] = float(point)*mins/60
-                current_date = current_date + datetime.timedelta(minutes = mins)
+                current_date = current_date + datetime.timedelta(minutes=mins)
             data_for_ids[str(file_index)+str(gauge_index+1)] = {"metadata": {"name": name, "x": x, "y": y}, "data": data_for_dates}
     
     return data_for_ids

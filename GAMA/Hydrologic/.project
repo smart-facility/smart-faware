@@ -17,14 +17,54 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>external/3dshape.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/model/3dshape.shp</location>
+		</link>
+		<link>
 			<name>external/all.csv</name>
 			<type>1</type>
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/all.csv</location>
 		</link>
 		<link>
+			<name>external/catchment_shape.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/model/catchment_shape.shp</location>
+		</link>
+		<link>
+			<name>external/coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/validation/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/validation/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of level.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/validation/level.csv</location>
+		</link>
+		<link>
+			<name>external/copy of rain.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/rain_in/rain.csv</location>
+		</link>
+		<link>
 			<name>external/cum_rain.csv</name>
 			<type>1</type>
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/cum_rain.csv</location>
+		</link>
+		<link>
+			<name>external/grid.tif</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/rain_in/grid.tif</location>
+		</link>
+		<link>
+			<name>external/level.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/validation/level.csv</location>
 		</link>
 		<link>
 			<name>external/outflow.csv</name>
@@ -37,6 +77,11 @@
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/output.csv</location>
 		</link>
 		<link>
+			<name>external/rain.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/rain_in/rain.csv</location>
+		</link>
+		<link>
 			<name>external/storage.csv</name>
 			<type>1</type>
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage.csv</location>
@@ -45,6 +90,11 @@
 			<name>external/storage_08.csv</name>
 			<type>1</type>
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage_08.csv</location>
+		</link>
+		<link>
+			<name>external/voronoi.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/rain_in/voronoi.shp</location>
 		</link>
 	</linkedResources>
 </projectDescription>

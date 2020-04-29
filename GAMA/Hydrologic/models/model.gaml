@@ -1,31 +1,34 @@
 model hydrologic
 
 global {
-	string mode <- "../../../data/model/";
-	string expe <- "../../../data/experiments/WBNM_98/";
+	file mode <- folder("../../../data/model/");
+	file expe <- folder("../../../data/experiments/BOM_2018/") parameter: "Experiment Folder";
 	
 	//Model Data
-	file catchment_gis <- file(mode+"catchment_shape.shp");
-	file catchment_3d <- shape_file(mode+"3dshape.shp", true);
+	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
+	file catchment_3d <- shape_file(mode.path+"/3dshape.shp", true);
 	geometry shape <- envelope(catchment_gis);
 	
-	float step parameter: step <- 5#mn;
-	date starting_date <- date("19980817");
-	date stopping_date <- date("19980818 12:00");
 	
 	//Experiment Data
-	file cloud_gis <- file(expe+"rain_in/voronoi.shp");
-	file cloud_csv <- file(expe+"rain_in/rain.csv");
+	//Determine the type of file used in the rain_in folder, could be tif, or shp
+	string cloud_gis_name <- one_of(list(folder(expe.path+"/rain_in").contents) select ((string(each) contains ".shp") or (string(each) contains ".tif")));
+	file cloud_gis <- file(expe.path+"/rain_in/"+cloud_gis_name);
+	file cloud_csv <- file(expe.path+"/rain_in/rain.csv");
 	
-	file sensor_gis <- file(expe+"validation/coords.shp");
-	file sensor_csv <- file(expe+"validation/level.csv");
+	file sensor_gis <- file(expe.path+"/validation/coords.shp");
+	file sensor_csv <- file(expe.path+"/validation/level.csv");
+	
+	//Experiment Params
+	float step parameter: step <- 10#mn;
+	date starting_date <- date(matrix(cloud_csv.contents) column_at 0 at ((matrix(cloud_csv.contents) column_at 0 index_of "###START_DATA###") + 1)) - 30#mn;
+	date stopping_date <- starting_date + 1.5#days;
 	
 	//Constants etc
 	float LAG_PARAM <- 1.61;
 	
 		
 	init {
-		//Initialise Catchments
 		create catchment {
 	 		create sub_catch from: catchment_gis {
 	 			shape_3d <- one_of(catchment_3d where (each get "ID" = self get "ID"));
@@ -33,7 +36,6 @@ global {
 	 		outlet <- one_of(sub_catch where (each.downstream = nil));
 	 		ask sub_catch {upstream <- sub_catch where (each.downstream = self);}
 	 	}
-		
 		
 		//Initialise Clouds
 		map cloud_data <- get_data(cloud_csv);
@@ -62,7 +64,12 @@ global {
 		//Initialise Sensors
 		map sensor_data <- get_data(sensor_csv);
 		create sensor from: sensor_gis {
-			data <- sensor_data[id]["data"];
+			if id in sensor_data.keys {
+				data <- sensor_data[id]["data"];
+			}
+			else {
+				do die;
+			}
 			
 		}
 	}
@@ -267,7 +274,7 @@ experiment debug type: gui {
 }
 
 experiment cum_rain type: gui {
-	string file_out <- string(file(expe+"/output/cum_rain.csv"));
+	string file_out <- expe.path+"/output/cum_rain.csv";
 	init {
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
 	}
@@ -282,7 +289,7 @@ experiment cum_rain type: gui {
 }
 
 experiment storage type: gui {
-	string file_out <- string(file(expe+"/output/storage.csv"));
+	string file_out <- expe.path+"/output/storage.csv";
 	init {
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
 	}
@@ -293,7 +300,7 @@ experiment storage type: gui {
 }
 
 experiment outflow type: gui {
-	string file_out <- string(file(expe+"/output/outflow.csv"));
+	string file_out <- expe.path+"/output/outflow.csv";
 	init {
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
 	}
@@ -304,7 +311,7 @@ experiment outflow type: gui {
 }
 
 experiment maplabels type: gui {
-	file outlets <- file(mode+"nodes_points_catchment.shp");
+	file outlets <- file(mode.path+"nodes_points_catchment.shp");
 	output {
 		display catchment_labels {
 			species catchment;
