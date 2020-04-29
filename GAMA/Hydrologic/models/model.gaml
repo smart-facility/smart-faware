@@ -2,7 +2,7 @@ model hydrologic
 
 global {
 	file mode <- folder("../../../data/model/");
-	file expe <- folder("../../../data/experiments/BOM_2018/") parameter: "Experiment Folder";
+	file expe <- folder("../../../data/experiments/2020_Feb8/") parameter: "Experiment Folder";
 	
 	//Model Data
 	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
@@ -20,9 +20,9 @@ global {
 	file sensor_csv <- file(expe.path+"/validation/level.csv");
 	
 	//Experiment Params
-	float step parameter: step <- 10#mn;
+	float step parameter: step <- 5#mn;
 	date starting_date <- date(matrix(cloud_csv.contents) column_at 0 at ((matrix(cloud_csv.contents) column_at 0 index_of "###START_DATA###") + 1)) - 30#mn;
-	date stopping_date <- starting_date + 1.5#days;
+	date stopping_date <- date(reverse(matrix(cloud_csv.contents) column_at 0)[0]) + 30#mn;
 	
 	//Constants etc
 	float LAG_PARAM <- 1.61;
@@ -54,7 +54,7 @@ global {
 				}
 				
 				loop cat over: catchment[0].sub_catch where (each overlaps self) {
-	 				create sub_cloud from: [cat inter self] {
+	 				create sub_cloud from: [cat inter self.shape] {
 	 					target <- cat;
 	 				}
 	 			}
@@ -253,13 +253,18 @@ experiment Visualise type: gui {
 }
 
 experiment debug type: gui {
+	file outlets <- file(mode.path+"/nodes_points_catchment.shp");
 	output {
 		display main type: opengl background: #black {
 			species catchment aspect: debug;
 			graphics "connections" position: {0, 0, 0.025} {
 				loop cat over: catchment[0].sub_catch {
-					draw line(cat.location, cat.downstream.location) color: #blue width: 2;
-					draw sphere(50) color: #darkblue at: cat.location;
+					geometry down_cat <- cat.downstream != nil? cat.downstream.shape:{0,0,0};
+					geometry double_down_cat <- cat.downstream.downstream != nil? cat.downstream.downstream.shape:{0,0,0};
+					point cat_outlet <- container<point>(outlets) where (each overlaps cat) closest_to(down_cat);
+					point down_outlet <- container<point>(outlets) where (each overlaps cat.downstream) closest_to(double_down_cat);
+					draw line(cat_outlet != nil? cat_outlet: cat.location, down_outlet != nil? down_outlet: cat.downstream.location) color: #blue width: 2;
+					draw sphere(50) color: #darkblue at: cat_outlet != nil? cat_outlet: cat.location;
 					draw replace(cat.name, "sub_", "") color: #red font: font("Helvetica", 32, #plain) at: cat.location;
 				}
 			}
@@ -273,47 +278,47 @@ experiment debug type: gui {
 	}
 }
 
-experiment cum_rain type: gui {
-	string file_out <- expe.path+"/output/cum_rain.csv";
+experiment write_output type: gui {
+	output {
+		display main type: opengl {
+			species catchment aspect: catch_3d;
+			species sensor position: {0, 0, 0.1};
+			species cloud position: {0, 0, 0.4} transparency: 0.5;
+		}
+	}
+	string rain_file_out <- expe.path+"/output/cum_rain.csv";
+	string storage_file_out <- expe.path+"/output/storage.csv";
+	string outflow_file_out <- expe.path+"/output/outflow.csv";
 	init {
-		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
+		save ["datetime"] + (catchment[0].sub_catch collect (each.name)) to: rain_file_out rewrite: true type: "csv" header: false;
+		save ["datetime"] + (catchment[0].sub_catch collect (each.name)) to: storage_file_out rewrite: true type: "csv" header: false;
+		save ["datetime"] + (catchment[0].sub_catch collect (each.name)) to: outflow_file_out rewrite: true type: "csv" header: false;
 	}
 	
-	reflex write when: (current_date <= stopping_date){
+	reflex write_rain when: (current_date <= stopping_date){
 		list values;
 		loop cat over: catchment[0].sub_catch {
 			values <+ cat.rain_in / cat.shape.area;
 		}
-		save [string(current_date)] + values  to: file_out rewrite: false type: "csv";
+		save [string(current_date)] + values  to: rain_file_out rewrite: false type: "csv";
 	}
-}
-
-experiment storage type: gui {
-	string file_out <- expe.path+"/output/storage.csv";
-	init {
-		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
+	reflex write_storage when: (current_date <= stopping_date){
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.storage)) to: storage_file_out rewrite: false type: "csv";
 	}
-	
-	reflex write when: (current_date <= stopping_date){
-		save [string(current_date)] + (catchment[0].sub_catch collect (each.storage)) to: file_out rewrite: false type: "csv";
+	reflex write_outflow when: (current_date <= stopping_date){
+		save [string(current_date)] + (catchment[0].sub_catch collect (each.out_flow/step)) to: outflow_file_out rewrite: false type: "csv";
 	}
-}
-
-experiment outflow type: gui {
-	string file_out <- expe.path+"/output/outflow.csv";
-	init {
-		save [string(current_date)] + (catchment[0].sub_catch collect (each.name)) to: file_out rewrite: true type: "csv" header: false;
-	}
-	
-	reflex write when: (current_date <= stopping_date){
-		save [string(current_date)] + (catchment[0].sub_catch collect (each.out_flow/step)) to: file_out rewrite: false type: "csv";
+	reflex stop when: (current_date > stopping_date){
+		ask simulation {
+			do pause;
+		}
 	}
 }
 
 experiment maplabels type: gui {
-	file outlets <- file(mode.path+"nodes_points_catchment.shp");
+	file outlets <- file(mode.path+"/nodes_points_catchment.shp");
 	output {
-		display catchment_labels {
+		display catchment_labels type: opengl {
 			species catchment;
 			graphics "names" {
 				loop cat over: catchment[0].sub_catch {

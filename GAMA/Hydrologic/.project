@@ -42,6 +42,51 @@
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/validation/coords.shp</location>
 		</link>
 		<link>
+			<name>external/copy of copy of coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2018-2020_MHL/validation/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/rain_in/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of copy of coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2020_Feb8/validation/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of copy of copy of coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2020_Feb8/rain_in/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of level.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2020_Feb8/validation/level.csv</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of rain.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2020_Feb8/rain_in/rain.csv</location>
+		</link>
+		<link>
+			<name>external/copy of copy of level.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2018-2020_MHL/validation/level.csv</location>
+		</link>
+		<link>
+			<name>external/copy of copy of rain.csv</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2018-2020_MHL/rain_in/rain.csv</location>
+		</link>
+		<link>
+			<name>external/copy of copy of voronoi.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2020_Feb8/rain_in/voronoi.shp</location>
+		</link>
+		<link>
 			<name>external/copy of level.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/validation/level.csv</location>
@@ -50,6 +95,11 @@
 			<name>external/copy of rain.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/WBNM_98/rain_in/rain.csv</location>
+		</link>
+		<link>
+			<name>external/copy of voronoi.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2018-2020_MHL/rain_in/voronoi.shp</location>
 		</link>
 		<link>
 			<name>external/cum_rain.csv</name>
@@ -65,6 +115,11 @@
 			<name>external/level.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/validation/level.csv</location>
+		</link>
+		<link>
+			<name>external/nodes_points_catchment.shp</name>
+			<type>1</type>
+			<location>C:/Users/Nate/Work/smart-faware/data/model/nodes_points_catchment.shp</location>
 		</link>
 		<link>
 			<name>external/outflow.csv</name>
