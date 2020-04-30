@@ -2,7 +2,7 @@ model hydrologic
 
 global {
 	file mode <- folder("../../../data/model/");
-	file expe <- folder("../../../data/experiments/2020_Feb8/") parameter: "Experiment Folder";
+	file expe <- folder("../../../data/experiments/1998_Aug17_WBNM/") parameter: "Experiment Folder";
 	
 	//Model Data
 	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
@@ -84,7 +84,10 @@ global {
 			int idx <- data row_at 0 index_of id;
 			map<date, float> id_data;
 			loop date_it over: dates {
-				id_data[date_it] <- float(data at ((data index_of date_it) + {idx, 0, 0}));
+				string data_point <- data at ((data index_of date_it) + {idx, 0, 0});
+				if data_point != "" {
+					id_data[date_it] <- float(data_point);
+				}
 			}
 			output[int(id)] <- ["data"::id_data];
 		}
@@ -280,7 +283,7 @@ experiment debug type: gui {
 
 experiment write_output type: gui {
 	output {
-		display main type: opengl {
+		display main type: opengl background: #black {
 			species catchment aspect: catch_3d;
 			species sensor position: {0, 0, 0.1};
 			species cloud position: {0, 0, 0.4} transparency: 0.5;
