@@ -44,9 +44,9 @@ def load(inputs):
     
     data_for_ids = {}
     dates = data_for_dates.keys()
-    for y in range(y_bound[1]-y_bound[0]):
-        for x in range(x_bound[1]-x_bound[0]):
-            id = x+y*(x_bound[1]-x_bound[0])
+    for x in range(x_bound[1]-x_bound[0]):
+        for y in range(y_bound[1]-y_bound[0]):
+            id = x*(x_bound[1]-x_bound[0])+y
             data_for_ids[id] = {"metadata": {"latitude": "nil", "longitude": "nil"}, "data": {date:data_for_dates[date][x,y] for date in dates}}
 
     return data_for_ids

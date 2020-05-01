@@ -2,7 +2,7 @@ model hydrologic
 
 global {
 	file mode <- folder("../../../data/model/");
-	file expe <- folder("../../../data/experiments/1998_Aug17_WBNM/") parameter: "Experiment Folder";
+	file expe <- folder("../../../data/experiments/2018_Oct5_BOM/") parameter: "Experiment Folder";
 	
 	//Model Data
 	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
@@ -39,7 +39,7 @@ global {
 		
 		//Initialise Clouds
 		map cloud_data <- get_data(cloud_csv);
-		
+		write cloud_data[0]["data"];
 		loop spot over: cloud_gis {
 			create cloud from: container<geometry>(spot) {
 				int id <- int(self get "id");
