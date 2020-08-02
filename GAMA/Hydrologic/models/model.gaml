@@ -268,7 +268,7 @@ experiment debug type: gui {
 					point down_outlet <- container<point>(outlets) where (each overlaps cat.downstream) closest_to(double_down_cat);
 					draw line(cat_outlet != nil? cat_outlet: cat.location, down_outlet != nil? down_outlet: cat.downstream.location) color: #blue width: 2;
 					draw sphere(50) color: #darkblue at: cat_outlet != nil? cat_outlet: cat.location;
-					draw replace(cat.name, "sub_", "") color: #red font: font("Helvetica", 32, #plain) at: cat.location;
+					draw replace(cat.name, "sub_catch", "") color: #red font: font("Helvetica", 32, #plain) at: cat.location;
 				}
 			}
 			species sensor position: {0, 0, 0.1};

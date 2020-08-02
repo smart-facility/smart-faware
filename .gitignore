@@ -10,4 +10,5 @@ GAMA/.cache
 
 /Resources
 /data/model/DEM/high_res.tif
+/data/model/DEM/high_res/high_res.tif
 data/model/test3.tif
