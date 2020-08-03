@@ -112,6 +112,21 @@
 			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/2018_Oct5_BOM/validation/coords.shp</location>
 		</link>
 		<link>
+			<name>external/copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of coords.shp</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/validation/coords.shp</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of level.csv</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/validation/level.csv</location>
+		</link>
+		<link>
+			<name>external/copy of copy of copy of copy of copy of copy of copy of copy of copy of copy of rain.csv</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/rain_in/rain.csv</location>
+		</link>
+		<link>
 			<name>external/copy of copy of copy of copy of copy of copy of copy of copy of copy of level.csv</name>
 			<type>1</type>
 			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/2018_Oct5_BOM/validation/level.csv</location>
@@ -187,6 +202,11 @@
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/1998_Aug17_WBNM/rain_in/voronoi.shp</location>
 		</link>
 		<link>
+			<name>external/copy of copy of copy of grid.tif</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/rain_in/grid.tif</location>
+		</link>
+		<link>
 			<name>external/copy of copy of copy of level.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/2020_Feb8/validation/level.csv</location>
@@ -257,6 +277,11 @@
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/rain_in/grid.tif</location>
 		</link>
 		<link>
+			<name>external/grid.tif.aux.xml</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/rain_in/grid.tif.aux.xml</location>
+		</link>
+		<link>
 			<name>external/level.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/validation/level.csv</location>
@@ -280,6 +305,16 @@
 			<name>external/rain.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/rain_in/rain.csv</location>
+		</link>
+		<link>
+			<name>external/rain3_grid.tif</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/rain_in/rain3_grid.tif</location>
+		</link>
+		<link>
+			<name>external/rain3_grid.tif.aux.xml</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/rain_in/rain3_grid.tif.aux.xml</location>
 		</link>
 		<link>
 			<name>external/storage.csv</name>

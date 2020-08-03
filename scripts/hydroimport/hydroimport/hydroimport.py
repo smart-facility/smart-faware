@@ -60,10 +60,10 @@ def three():
         data_dates = {}
 
         for file in files:
-            print(file)
+            #print(file)
             rain, date = rainfields.three(file, x_bound, y_bound)
-            print(rain.max())
-            print(date)
+            #print(rain.max())
+            #print(date)
             data_dates[date] = rain
 
 
@@ -76,14 +76,45 @@ def three():
                     'metadata': {'latitude': 'nil', 'longitude': 'nil'},
                     'data': {date:data_dates[date][x,y] for date in dates}
                 }
-        
-        print(data)
+        print(args['output'])
+        write_csv(data_ids, args['output'])
 
 def two():
         ###CONSTANTS###
         y_bound = (253,259)
         x_bound = (379,385)
         ensemble_member = 0
+
+###WRITE LOADED DATA TO CSV###
+def write_csv(data, output):
+    ids = list(data.keys())
+    file = open(output, "w")
+
+    def write_metadata(file, data, ids):
+        file.write("###START_METADATA###\n")
+        parameters = list(data[0]["metadata"].keys())
+        for param in parameters:
+            file.write(param+",")
+            for id in ids:
+                file.write(str(data[id]["metadata"][param])+",")
+            file.write("\n")
+
+    def write_data(file, data, ids):
+        file.write("###START_DATA###\n")
+        dates = list(data[0]["data"].keys())
+        for date in dates:
+            file.write(date.strftime("%Y-%m-%d %H:%M")+",")
+            for id in ids:
+                file.write(str(data[id]["data"][date])+",")
+            file.write("\n")
+    
+    file.write("id,")
+    for id in ids:
+        file.write(str(id)+",")
+    file.write("\n")
+
+    write_metadata(file, data, ids)
+    write_data(file, data, ids)
 
 ###PROGRAM FLOW HERE###
 args = parser()
