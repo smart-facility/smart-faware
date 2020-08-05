@@ -60,7 +60,7 @@ def three():
         data_dates = {}
 
         for file in files:
-            #print(file)
+            print(file)
             rain, date = rainfields.three(file, x_bound, y_bound)
             #print(rain.max())
             #print(date)

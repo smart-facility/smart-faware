@@ -2,17 +2,19 @@ model hydrologic
 
 global {
 	file mode <- folder("../../../data/model/");
-	file expe <- folder("../../../data/experiments/rainfields3/") parameter: "Experiment Folder";
+	file expe <- folder("../../../data/experiments/2020_FebMarch_BOM/") parameter: "Experiment Folder";
 	
 	//Model Data
 	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
 	file catchment_3d <- shape_file(mode.path+"/3dshape.shp", true);
 	geometry shape <- envelope(catchment_gis);
 	
+	date start_rain;
+	date stop_rain;
 	
 	//Experiment Data
 	//Determine the type of file used in the rain_in folder, could be tif, or shp
-	string cloud_gis_name <- one_of(list(folder(expe.path+"/rain_in").contents) select ((string(each) contains ".shp") or (string(each) contains ".tif")));
+	string cloud_gis_name <- one_of(list(folder(expe.path+"/rain_in").contents) select ((string(each) contains "voronoi.shp") or (string(each) contains ".tif" and not (string(each) contains ".xml"))));
 	file cloud_gis <- file(expe.path+"/rain_in/"+cloud_gis_name);
 	file cloud_csv <- file(expe.path+"/rain_in/rain.csv");
 	
@@ -39,15 +41,18 @@ global {
 		
 		//Initialise Clouds
 		map cloud_data <- get_data(cloud_csv);
-		write cloud_data[0]["data"];
+		start_rain <- map(cloud_data[0]['data']).keys[0];
+		stop_rain <- last(map(cloud_data[0]['data']).keys);
 		loop spot over: cloud_gis {
 			create cloud from: container<geometry>(spot) {
-				int id <- int(self get "id");
+				id <- int(self get "id");
 				if id = 0 {
 					id <- int(replace(self.name, "cloud", ""));
 				}
 				if id in cloud_data.keys {
 					data <- cloud_data[id]["data"];
+					dates <- data.keys;
+					precips <- data.values;
 				}
 				else {
 					do die;
@@ -80,6 +85,7 @@ global {
 		matrix data <- matrix(csv_in);
 		list dates <- data column_at 0 select ((data index_of each).y > (data index_of "###START_DATA###").y);
 		list ids <- data row_at 0 select (each != "id");
+		ids >- '';
 		loop id over: ids {
 			int idx <- data row_at 0 index_of id;
 			map<date, float> id_data;
@@ -96,14 +102,47 @@ global {
 }
 
 species cloud {
+	int id;
 	map<date, float> data;
 	float precip_now;
+	int date_index <- 0;
 	
+	list<date> dates;
+	list<float> precips;
+	/*
 	reflex update_precip {
+		benchmark precip {
 		precip_now <- 0.0;
 		list times <- data.keys where ((each >= current_date) and (each < current_date + step));
 		loop timey over: times {
 			precip_now <- precip_now + data[timey];
+		}
+		}
+	}*/
+	
+	reflex update_precip {
+		benchmark precip {
+		precip_now <- 0.0;
+		
+		if current_date >= start_rain and current_date <= stop_rain {
+			loop while: dates[date_index] < current_date {
+				date_index <- date_index + 1;
+			}
+			
+			date cutoff <- current_date  + step;
+			bool raining <- true;
+			
+			loop while: raining {
+				precip_now <- precip_now + precips[date_index];
+				date_index <- date_index + 1;
+				if dates[date_index] >= cutoff {
+					raining <- false;
+				}
+			}
+		}
+		
+		
+		
 		}
 	}
 	
@@ -255,7 +294,7 @@ experiment Visualise type: gui {
 	}
 }
 
-experiment debug type: gui {
+experiment debug type: gui benchmark: true {
 	file outlets <- file(mode.path+"/nodes_points_catchment.shp");
 	output {
 		display main type: opengl background: #black {
