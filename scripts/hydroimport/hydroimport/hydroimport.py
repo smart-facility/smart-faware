@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, re, datetime
 import importers.rainfields as rainfields
 
 def fileOrDir(path):
@@ -37,7 +37,8 @@ def handler(args):
 
     switch = {
         'rf3': three,
-        'rf2': two
+        'rf2': two,
+        'mhl': mhl
     }
 
     switch[args['type']]()
@@ -85,6 +86,35 @@ def two():
         x_bound = (379,385)
         ensemble_member = 0
 
+def mhl():
+    in_path = args['input']
+    in_type = fileOrDir(in_path)
+
+    if in_type == 'file':
+        files = [in_path]
+    elif in_type == 'dir':
+        files = [f"{in_path}/"+name for name in os.listdir(in_path) if ".csv" in name]
+
+    data_for_ids = {}
+    for file_name in files:
+        file_in = open(file_name, "r")
+        data = file_in.read()
+        name = re.findall(r"Station Name, (?P<name>.*?)\n", data)[0]
+        id = re.findall(r"Station Number, (?P<id>\d{4,7})\n", data)[0]
+        lat = re.findall(r"Latitude,(?P<latitude>-?\d{0,7}.?\d{0,7})", data)[0]
+        lon = re.findall(r"Longitude,(?P<latitude>-?\d{0,7}.?\d{0,7})", data)[0]
+        values = re.findall(r"(?P<date>\d{1,2}/\d{1,2}/\d{4}),(?P<time>\d{1,2}:\d{1,2}:\d{1,2}),(?P<value>\d{0,3}.?\d{0,3})", data)
+        data_for_dates = {}
+        for value in values:
+            time = datetime.datetime.strptime(value[0]+" "+value[1], "%d/%m/%Y %H:%M:%S")
+            datum = value[2]
+            data_for_dates[time] = datum
+        data_for_ids[id] = {"metadata": {"latitude": lat, "longitude": lon, "name": name}, "data": data_for_dates}
+
+    print(args['output'])
+    #print(list(data_for_ids.keys()))
+    write_csv(data_for_ids, args['output'])
+
 ###WRITE LOADED DATA TO CSV###
 def write_csv(data, output):
     ids = list(data.keys())
@@ -92,7 +122,7 @@ def write_csv(data, output):
 
     def write_metadata(file, data, ids):
         file.write("###START_METADATA###\n")
-        parameters = list(data[0]["metadata"].keys())
+        parameters = list(data[ids[0]]["metadata"].keys())
         for param in parameters:
             file.write(param+",")
             for id in ids:
@@ -101,7 +131,7 @@ def write_csv(data, output):
 
     def write_data(file, data, ids):
         file.write("###START_DATA###\n")
-        dates = list(data[0]["data"].keys())
+        dates = list(data[ids[0]]["data"].keys())
         for date in dates:
             file.write(date.strftime("%Y-%m-%d %H:%M")+",")
             for id in ids:

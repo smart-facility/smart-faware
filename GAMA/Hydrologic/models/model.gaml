@@ -2,7 +2,7 @@ model hydrologic
 
 global {
 	file mode <- folder("../../../data/model/");
-	file expe <- folder("../../../data/experiments/2020_FebMarch_BOM/") parameter: "Experiment Folder";
+	file expe <- folder("../../../data/experiments/2020_FebMarch_MHL/") parameter: "Experiment Folder";
 	
 	//Model Data
 	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
@@ -41,8 +41,8 @@ global {
 		
 		//Initialise Clouds
 		map cloud_data <- get_data(cloud_csv);
-		start_rain <- map(cloud_data[0]['data']).keys[0];
-		stop_rain <- last(map(cloud_data[0]['data']).keys);
+		start_rain <- map(cloud_data[cloud_data.keys[0]]['data']).keys[0];
+		stop_rain <- last(map(cloud_data[cloud_data.keys[0]]['data']).keys);
 		loop spot over: cloud_gis {
 			create cloud from: container<geometry>(spot) {
 				id <- int(self get "id");
