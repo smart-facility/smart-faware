@@ -2,7 +2,7 @@ model hydrologic
 
 global {
 	file mode <- folder("../../../data/model/");
-	file expe <- folder("../../../data/experiments/2020_FebMarch_MHL/") parameter: "Experiment Folder";
+	file expe <- folder("../../../data/experiments/2020_FEBMARCH_MHL/") parameter: "Experiment Folder";
 	
 	//Model Data
 	file catchment_gis <- file(mode.path+"/catchment_shape.shp");
@@ -53,6 +53,7 @@ global {
 					data <- cloud_data[id]["data"];
 					dates <- data.keys;
 					precips <- data.values;
+					long <- length(dates);
 				}
 				else {
 					do die;
@@ -109,6 +110,7 @@ species cloud {
 	
 	list<date> dates;
 	list<float> precips;
+	int long;
 	/*
 	reflex update_precip {
 		benchmark precip {
@@ -120,30 +122,24 @@ species cloud {
 		}
 	}*/
 	
-	reflex update_precip {
-		benchmark precip {
+	reflex update_precip when: current_date >= start_rain and current_date <= stop_rain {
 		precip_now <- 0.0;
 		
-		if current_date >= start_rain and current_date <= stop_rain {
-			loop while: dates[date_index] < current_date {
-				date_index <- date_index + 1;
-			}
-			
-			date cutoff <- current_date  + step;
-			bool raining <- true;
-			
-			loop while: raining {
-				precip_now <- precip_now + precips[date_index];
-				date_index <- date_index + 1;
-				if dates[date_index] >= cutoff {
-					raining <- false;
-				}
-			}
+		loop while: dates[date_index] < current_date {
+			date_index <- date_index + 1;
 		}
 		
+		date cutoff <- current_date  + step;
+		bool raining <- true;
 		
-		
+		loop while: raining {
+			precip_now <- precip_now + precips[date_index];
+			date_index <- date_index + 1;
+			if (date_index >= long) or (dates[date_index] >= cutoff) {
+				raining <- false;
+			}
 		}
+	
 	}
 	
 	species sub_cloud {
@@ -153,7 +149,7 @@ species cloud {
 			float send <- host.precip_now#mm*self.shape.area;
 			ask target {
 				storage <- storage + send;
-				rain_in <- rain_in + send;
+				rain_in[current_date] <- rain_in[current_date] + send;
 			}
 		}
 	}
@@ -233,7 +229,7 @@ species catchment {
 		
 		geometry shape_3d;
 		
-		float rain_in;
+		map<date, float> rain_in;
 				
 		float in_flow <- 0.0;
 		float out_flow <- 0.0;
@@ -328,7 +324,7 @@ experiment write_output type: gui {
 			species cloud position: {0, 0, 0.4} transparency: 0.5;
 		}
 	}
-	string rain_file_out <- expe.path+"/output/cum_rain.csv";
+	string rain_file_out <- expe.path+"/output/rain.csv";
 	string storage_file_out <- expe.path+"/output/storage.csv";
 	string outflow_file_out <- expe.path+"/output/outflow.csv";
 	init {
@@ -336,14 +332,15 @@ experiment write_output type: gui {
 		save ["datetime"] + (catchment[0].sub_catch collect (each.name)) to: storage_file_out rewrite: true type: "csv" header: false;
 		save ["datetime"] + (catchment[0].sub_catch collect (each.name)) to: outflow_file_out rewrite: true type: "csv" header: false;
 	}
-	
+	/*
 	reflex write_rain when: (current_date <= stopping_date){
 		list values;
 		loop cat over: catchment[0].sub_catch {
-			values <+ cat.rain_in / cat.shape.area;
+			values <+ cat.rain_in[current_date] / cat.shape.area;
 		}
 		save [string(current_date)] + values  to: rain_file_out rewrite: false type: "csv";
 	}
+	*/
 	reflex write_storage when: (current_date <= stopping_date){
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.storage)) to: storage_file_out rewrite: false type: "csv";
 	}
@@ -351,6 +348,14 @@ experiment write_output type: gui {
 		save [string(current_date)] + (catchment[0].sub_catch collect (each.out_flow/step)) to: outflow_file_out rewrite: false type: "csv";
 	}
 	reflex stop when: (current_date > stopping_date){
+		loop date over: catchment[0].sub_catch[0].rain_in.keys {
+			list values;
+			loop cat over: catchment[0].sub_catch {
+				values <+ cat.rain_in[date] / cat.shape.area;
+			}
+			/*write values;*/
+			save [string(date)] + values  to: rain_file_out rewrite: false type: "csv";
+		}
 		ask simulation {
 			do pause;
 		}
