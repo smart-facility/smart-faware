@@ -52,7 +52,7 @@ FROM rainfall_raster, st_dumpaspolygons(st_clip(rast, (SELECT st_expand(st_envel
      		ask catchment[0].sub_catch where (each overlaps self) {
      			//send a volume equal to the size of intersection with the subcloud multiplied by the payload height
      			float send <- myself.payload#mm*intersection(self.shape, myself.shape).area*1e10;
-     			storage <- storage + send;
+     			rain_buffer <- rain_buffer + send;
      			rain_in[current_date] <- rain_in[current_date] + send;
      		}
      	}
@@ -132,20 +132,33 @@ species catchment parent: AgentDB {
 		float in_flow <- 0.0;
 		float out_flow <- 0.0;
 		float storage <- 0.0;
+		float rain_buffer <- 0.0;
+		
+		action drain_buffer {
+			if rain_buffer != 0 {
+				float buffer_out <- step*(rain_buffer/constant)^(1/0.77);
+				rain_buffer <- rain_buffer - buffer_out;
+				out_flow <- out_flow + buffer_out;	
+			}
+		}
 		
 		//recursively call flow from upstream and send downstream
 		action flow {
+			out_flow <- 0.0;
 			if upstream != [] {
 				ask upstream {do flow;}
 			}
 			storage <- storage + in_flow;
+			float temp_out;
 			if storage != 0 {
-				out_flow <- step*(storage/constant*0.6)^(1/0.77);
+				temp_out <- step*(storage/constant*0.6)^(1/0.77);
+				out_flow <- out_flow + temp_out;
 			}
 			else {
-				out_flow <- 0.0;
+				temp_out <- 0.0;
 			}
-			storage <- storage - out_flow;
+			storage <- storage - temp_out;
+			do drain_buffer;
 			in_flow <- 0.0;
 			if downstream != nil {
 				ask downstream {
@@ -161,7 +174,7 @@ species catchment parent: AgentDB {
 			draw shape border: #black color: #lightgreen;
 			
 			//draw water level above geometry
-			float level <- storage*1000/(shape.area*1e10);
+			float level <- (storage+rain_buffer)*1000/(shape.area*1e10);
 			draw shape at: location + {0, 0, 1e-5} color: rgb(0,0,255, sqrt(level)/20) depth: level*1e-4;
 		}
 	}
