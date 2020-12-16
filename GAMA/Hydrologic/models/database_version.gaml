@@ -43,7 +43,7 @@ FROM rainfall_raster, st_dumpaspolygons(st_clip(rast, (SELECT st_expand(st_envel
      	create subcloud from: c with: [shape::'geom', time::'stamp', payload::'val'];
      }
      
-     species subcloud {
+     species subcloud parallel: true {
      	date time;
      	float payload;
      	

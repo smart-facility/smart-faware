@@ -452,6 +452,11 @@
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/cum_rain.csv</location>
 		</link>
 		<link>
+			<name>external/db.json</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/db.json</location>
+		</link>
+		<link>
 			<name>external/grid.tif</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/rain_in/grid.tif</location>
@@ -505,6 +510,11 @@
 			<name>external/storage_08.csv</name>
 			<type>1</type>
 			<location>c:/users/nate/work/smart-faware/data/experiments/1998-2012_MHL/output/storage_08.csv</location>
+		</link>
+		<link>
+			<name>external/test_experiment.json</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/test_experiment.json</location>
 		</link>
 		<link>
 			<name>external/voronoi.shp</name>
