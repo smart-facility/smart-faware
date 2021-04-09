@@ -1,13 +1,13 @@
 {
-    "name":"test experiment",
+    "name":"rudy lag test",
     "flow":{
-        "lag_param":1.61,
+        "lag_param":0.5,
         "stream_const":0.6
     },
     "run":{
         "step":300,
         "start":"20200207",
-        "end":"20200210"
+        "end":"20200209"
     },
     "data":{
         "db":"db.json",

@@ -45,7 +45,7 @@ FROM rainfall_raster, st_dumpaspolygons(st_clip(rast, (SELECT st_expand(st_envel
      			//send a volume equal to the size of intersection with the subcloud multiplied by the payload height
      			float send <- myself.payload#mm*intersection(self.shape, myself.shape).area;
      			rain_buffer <- rain_buffer + send;
-     			rain_in[current_date] <- rain_in[current_date] + send;
+     			rain_in <- rain_in + send;
      		}
      	}
      }
@@ -92,7 +92,7 @@ species catchment skills: [SQLSKILL] {
 		
 		//geometry shape_3d;
 		
-		map<date, float> rain_in;
+		float rain_in;
 				
 		float in_flow <- 0.0;
 		float out_flow <- 0.0;
@@ -125,6 +125,7 @@ species catchment skills: [SQLSKILL] {
 			storage <- storage - temp_out;
 			do drain_buffer;
 			in_flow <- 0.0;
+			write out_flow/step;
 			if downstream != nil {
 				ask downstream {
 					self.in_flow <- self.in_flow + myself.out_flow;
@@ -166,6 +167,7 @@ experiment upload skills: [SQLSKILL] {
 		);
 		list get_index <- select(params: db_param.contents, select: 'SELECT index, name, runtime FROM experiment_info ORDER BY runtime DESC LIMIT 3');
 		experiment_index <- int(get_index[2][0][0]);
+		write 'experiment: ' + experiment_index;
 		ask catchment[0].sub_catch {
 			int catch_index <- catchment[0].sub_catch index_of self;
 			myself.upload_strings[catch_index] <- '';
@@ -174,17 +176,18 @@ experiment upload skills: [SQLSKILL] {
 	
 	reflex write {
 		string timestep <- "'"+string(current_date)+"'::timestamp";
-		ask catchment[0].sub_catch parallel: true {
+		ask catchment[0].sub_catch {
 			int catch_index <- catchment[0].sub_catch index_of self;
 			ask myself {
 				upload_strings[catch_index] <- upload_strings[catch_index] + 'INSERT INTO experiment_data 
 			(index, timestep, catchment, rain_in, rain_buffer, storage, flow) VALUES 
-			('+experiment_index+','+timestep+','+catch_index+','+-1+','+myself.rain_buffer+','+myself.storage+','+myself.out_flow/step+');';
+			('+experiment_index+','+timestep+','+catch_index+','+myself.rain_in/myself.shape.area+','+myself.rain_buffer+','+myself.storage+','+myself.out_flow/step+');';
 //				do insert(params: db_param.contents, into: 'experiment_data',
 //					columns: ['index', 'timestep', 'catchment', 'rain_in', 'rain_buffer', 'storage', 'flow'],
 //					values: [experiment_index, timestep, catch_index, -1, myself.rain_buffer, myself.storage, myself.out_flow/step]
 //				);
 			}
+			rain_in <- 0.0;
 		}
 	}
 	
@@ -194,6 +197,7 @@ experiment upload skills: [SQLSKILL] {
 			ask myself {
 				write 'uploading: ' + catch_index;
 				do executeUpdate(params: db_param.contents, updateComm: upload_strings[catch_index]);
+				upload_strings[catch_index] <- '';
 				write 'uploaded';
 			}
 		}

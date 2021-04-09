@@ -4,6 +4,8 @@ GAMA/.cache
 .gama*
 /.vscode
 
+altair-data*
+
 *.nc
 /data/data_archives
 /data/rain/rainfield_files
