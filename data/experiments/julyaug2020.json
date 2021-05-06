@@ -1,0 +1,19 @@
+{
+    "name":"julyaug",
+    "flow":{
+        "lag_param":1.61,
+        "stream_const":0.6
+    },
+    "run":{
+        "step":300,
+        "start":"20200701",
+        "end":"20200901"
+    },
+    "data":{
+        "db":"db.json",
+        "rain":"rf3",
+        "gauges": [568229, 568314, 568316, 568317, 568318],
+        "geom":"db",
+        "output":"db"
+    }
+}

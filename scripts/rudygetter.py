@@ -38,14 +38,14 @@ print(res.fetchall())
 # %%
 # sqlalchemy.select([experiment_data])
 # %%
-experiment_info = pd.DataFrame(columns=['name', 'runtime', 'data', 'lag_param', 'stream_const', 'step', 'starttime', 'endtime'], data=[['rudy0708_rout1', '20201125 0853', 'bom', '1.61', '0.6', '300', '20200207 0000', '20200209 0000']])
+experiment_info = pd.DataFrame(columns=['name', 'runtime', 'data', 'lag_param', 'stream_const', 'step', 'starttime', 'endtime'], data=[['rudy0708_rout1', "'now()'", 'bom', '1.61', '0.6', '300', '20200207 0000', '20200209 0000']])
 experiment_info.to_sql('experiment_info', db, if_exists='append', index=False)
 #%%
 res = conn.execute('SELECT index FROM experiment_info ORDER BY index DESC LIMIT 3')
 results = res.fetchall()
 experiment_index = results[0][0]
 #%%
-filename = '../data/UOW_Flash_Flood_REC_47_RG_Rout_1_Meta_AsCSV.csv'
+filename = '../data/UOW_Flash_Flood_REC_47_RG_Zero_New_Meta_AsCSV.csv'
 file = open(filename, 'r')
 data = file.read()
 experiment_data = pd.DataFrame(columns=['index', 'timestep', 'catchment', 'rain_in', 'flow'])

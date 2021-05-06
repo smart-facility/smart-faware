@@ -1,7 +1,7 @@
 {
     "name":"rudy lag test",
     "flow":{
-        "lag_param":0.5,
+        "lag_param":1.61,
         "stream_const":0.6
     },
     "run":{

@@ -116,7 +116,9 @@ species catchment skills: [SQLSKILL] {
 			storage <- storage + in_flow;
 			float temp_out;
 			if storage != 0 {
-				temp_out <- step*(storage/constant*stream_const)^(1/0.77);
+				//temp_out <- step*(storage/constant*stream_const)^(1/0.77);
+				//out_flow <- out_flow + temp_out;
+				temp_out <- storage;
 				out_flow <- out_flow + temp_out;
 			}
 			else {
