@@ -467,6 +467,11 @@
 			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/rainfields3/rain_in/grid.tif.aux.xml</location>
 		</link>
 		<link>
+			<name>external/julyaug2020.json</name>
+			<type>1</type>
+			<location>C:/Users/nhutchis/Documents/Projects/smart-faware/data/experiments/julyaug2020.json</location>
+		</link>
+		<link>
 			<name>external/level.csv</name>
 			<type>1</type>
 			<location>C:/Users/Nate/Work/smart-faware/data/experiments/BOM_2018/validation/level.csv</location>

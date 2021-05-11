@@ -4,7 +4,7 @@ import "./components/visualisation.gaml"
 
 global {	
 	file experiments <- folder('../../../data/experiments');
-	file parameters <- json_file(experiments.path+'/test_experiment.json');
+	file parameters <- json_file(experiments.path+'/julyaug2020.json');
 	file db_param <- json_file(experiments.path+'/'+parameters['data']['db']);
 	
 	date start <- date(parameters['run']['start']);
@@ -31,9 +31,31 @@ global {
 species cloud skills: [SQLSKILL] {
 	
 	init {
-		list c <- select(params:db_param.contents, select:'SELECT st_asbinary(st_transform(geom, 28356)) AS geom, round(val::decimal, 2) AS val, stamp::text 
+		if parameters["data"]["rain"] = "bom" {
+			list c <- select(params:db_param.contents, select:'SELECT st_asbinary(st_transform(geom, 28356)) AS geom, round(val::decimal, 2) AS val, stamp::text 
 FROM rainfall_raster, st_dumpaspolygons(st_clip(rast, (SELECT st_expand(st_envelope(st_collect(geom)), 0.01) FROM catchment))) WHERE val > 0 AND stamp BETWEEN \''+start+'\' AND \''+end+'\'');
-		create subcloud from: c with: [shape::'geom', time::'stamp', payload::'val'];
+			create subcloud from: c with: [shape::'geom', time::'stamp', payload::'val'];
+		} else if parameters["data"]["rain"] = "mhl" {
+			list gauges <- parameters["data"]["gauges"];
+			int len <- length(gauges);
+			int count <- 1;
+			string str <- '(';
+			loop gauge over: gauges {
+				if count >= len {
+					str <- str + gauge + ')';
+					break;
+				}
+				str <- str + gauge + ',';
+				count <- count + 1;
+			}
+			list c <- select(params:db_param.contents, select:'SELECT val, stamp::text, st_asbinary(st_transform(geom, 28356)) AS geom FROM rainfall RIGHT JOIN (SELECT (dump.geom).geom, id FROM (SELECT st_dump(st_voronoipolygons(st_collect(geom))) AS geom
+FROM information WHERE id IN '+str+') AS dump
+CROSS JOIN
+information WHERE st_intersects(information.geom, (dump.geom).geom) AND information.id IN '+str+') AS polys using(id)
+WHERE val > 0 AND stamp BETWEEN \''+start+'\' AND \''+end+'\'');
+			create subcloud from: c with: [shape::'geom', time::'stamp', payload::'val'];
+		}
+		
 	}
 	species subcloud parallel: true {
      	date time;
@@ -127,7 +149,7 @@ species catchment skills: [SQLSKILL] {
 			storage <- storage - temp_out;
 			do drain_buffer;
 			in_flow <- 0.0;
-			write out_flow/step;
+			//write out_flow/step;
 			if downstream != nil {
 				ask downstream {
 					self.in_flow <- self.in_flow + myself.out_flow;
