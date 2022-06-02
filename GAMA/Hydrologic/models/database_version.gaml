@@ -4,11 +4,11 @@ global {
 	//setup to grab bounds of catchment from database
 	map<string,string> BOUNDS <- [  
     //'srid'::'32648',
-    'host'::'localhost',                                
+    'host'::'floodawaredev01.australiaeast.azurecontainer.io',                                
     'dbtype'::'postgres',
     'database'::'floodaware',
     'port'::'5432',                             
-    'user'::'floodaware',
+    'user'::'postgres',
     'passwd'::'1234',
     'select'::'SELECT ST_AsBinary(st_expand(st_envelope(st_collect(geom)), 0.01)) as geom FROM catchment'];
     geometry shape <- envelope(BOUNDS);
@@ -27,11 +27,11 @@ global {
 
 species cloud parent: AgentDB {
 	map<string, string> POSTGRES <- [
-     'host'::'localhost',
+     'host'::'0.0.0.0',
      'dbtype'::'postgres',
      'database'::'floodaware',
      'port'::'5432',
-     'user'::'floodaware',
+     'user'::'postgres',
      'passwd'::'1234'];
      
      init {
@@ -89,11 +89,11 @@ species catchment parent: AgentDB {
 	sub_catch outlet;
 	
 	map<string, string> POSTGRES <- [
-     'host'::'localhost',
+     'host'::'floodawaredev01.australiaeast.azurecontainer.io',
      'dbtype'::'postgres',
      'database'::'floodaware',
      'port'::'5432',
-     'user'::'floodaware',
+     'user'::'postgres',
      'passwd'::'1234'];
 	
 	reflex flow {

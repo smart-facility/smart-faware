@@ -1,13 +1,13 @@
 {
-    "name":"julyaug",
+    "name":"live",
     "flow":{
         "lag_param":1.61,
         "stream_const":0.6
     },
     "run":{
         "step":300,
-        "start":"20200725",
-        "end":"20200811"
+        "start":"20200207",
+        "end":"20200208"
     },
     "data":{
         "db":"db.json",

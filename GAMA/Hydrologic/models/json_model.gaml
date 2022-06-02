@@ -92,7 +92,7 @@ species catchment skills: [SQLSKILL] {
 	
 	init {
 		//grab geometries for catchment and set up individual sub catchment agents with links to their respective upstream and downstream sub catchments
-		list c <- select(params: db_param.contents, select:'SELECT st_asbinary(st_transform(geom, 28356)) AS geom, id, downstream FROM catchment');
+		list c <- select(params: db_param.contents, select:'SELECT st_asbinary(st_transform(geom, 28356)) AS geom, id, downstream FROM catchment ORDER BY id');
 		create sub_catch from: c with: [shape::'geom', id::'id', downstream_int::'downstream'];
 		ask sub_catch {
 			downstream <- downstream_int > 0 ? sub_catch[downstream_int - 1] : nil;
@@ -138,10 +138,10 @@ species catchment skills: [SQLSKILL] {
 			storage <- storage + in_flow;
 			float temp_out;
 			if storage != 0 {
-				//temp_out <- step*(storage/constant*stream_const)^(1/0.77);
-				//out_flow <- out_flow + temp_out;
-				temp_out <- storage;
+				temp_out <- step*(storage/constant*stream_const)^(1/0.77);
 				out_flow <- out_flow + temp_out;
+				// temp_out <- storage;
+				// out_flow <- out_flow + temp_out;
 			}
 			else {
 				temp_out <- 0.0;
@@ -187,7 +187,7 @@ experiment upload skills: [SQLSKILL] {
 		//string experiment_date <- string(current_date);
 		do insert(params: db_param.contents, into: 'experiment_info', 
 			columns: ['name', 'runtime', 'data', 'lag_param', 'stream_const', 'step', 'starttime', 'endtime'], 
-			values: [parameters['name'], "current_timestamp", 'bom', lag_param, stream_const, step, "'"+string(start)+"'::timestamp", "'"+string(end)+"'::timestamp"]
+			values: [parameters['name'], "current_timestamp", parameters["data"]["rain"], lag_param, stream_const, step, "'"+string(start)+"'::timestamp", "'"+string(end)+"'::timestamp"]
 		);
 		list get_index <- select(params: db_param.contents, select: 'SELECT index, name, runtime FROM experiment_info ORDER BY runtime DESC LIMIT 3');
 		experiment_index <- int(get_index[2][0][0]);

@@ -1,9 +1,9 @@
 {
-    "host":"localhost",
+    "host":"floodaware-db.postgres.database.azure.com",
     "dbtype":"postgres",
     "database":"floodaware",
     "port":"5432",
-    "user":"floodaware",
+    "user":"postgres",
     "passwd":"1234",
     "select":"SELECT ST_AsBinary(st_expand(st_envelope(st_collect(st_transform(geom, 28356))), 0.01)) AS geom FROM catchment"
 }
