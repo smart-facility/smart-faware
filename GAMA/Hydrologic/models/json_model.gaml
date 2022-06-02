@@ -5,18 +5,18 @@ import "./components/visualisation.gaml"
 global {	
 	file experiments <- folder('../../../data/experiments');
 	file parameters <- json_file(experiments.path+'/julyaug2020.json');
-	file db_param <- json_file(experiments.path+'/'+parameters['data']['db']);
+	file db_param <- json_file(experiments.path+'/'+map(parameters['data'])['db']);
 	
-	date start <- date(parameters['run']['start']);
+	date start <- date(map(parameters['run'])['start']);
 	date starting_date <- start - 20#mn;
-	date end <- date(parameters['run']['end']);
+	date end <- date(map(parameters['run'])['end']);
 	date stopping_date <- end + 20#mn;
-	float step <- float(parameters['run']['step']);
+	float step <- float(map(parameters['run'])['step']);
 	
-	float lag_param <- float(parameters['flow']['lag_param']);
-	float stream_const <- float(parameters['flow']['stream_const']);
+	float lag_param <- float(map(parameters['flow'])['lag_param']);
+	float stream_const <- float(map(parameters['flow'])['stream_const']);
 	
-    geometry shape <- parameters['data']['geom'] = 'db' ? envelope(db_param.contents): envelope(file(parameters['data']['geom']));
+    geometry shape <- map(parameters['data'])['geom'] = 'db' ? envelope(db_param.contents): envelope(file(map(parameters['data'])['geom']));
 	
 	init {
 		create cloud;
@@ -31,12 +31,12 @@ global {
 species cloud skills: [SQLSKILL] {
 	
 	init {
-		if parameters["data"]["rain"] = "bom" {
+		if map(parameters["data"])["rain"] = "bom" {
 			list c <- select(params:db_param.contents, select:'SELECT st_asbinary(st_transform(geom, 28356)) AS geom, round(val::decimal, 2) AS val, stamp::text 
 FROM rainfall_raster, st_dumpaspolygons(st_clip(rast, (SELECT st_expand(st_envelope(st_collect(geom)), 0.01) FROM catchment))) WHERE val > 0 AND stamp BETWEEN \''+start+'\' AND \''+end+'\'');
 			create subcloud from: c with: [shape::'geom', time::'stamp', payload::'val'];
-		} else if parameters["data"]["rain"] = "mhl" {
-			list gauges <- parameters["data"]["gauges"];
+		} else if map(parameters["data"])["rain"] = "mhl" {
+			list gauges <- map(parameters["data"])["gauges"];
 			int len <- length(gauges);
 			int count <- 1;
 			string str <- '(';
@@ -187,10 +187,10 @@ experiment upload skills: [SQLSKILL] {
 		//string experiment_date <- string(current_date);
 		do insert(params: db_param.contents, into: 'experiment_info', 
 			columns: ['name', 'runtime', 'data', 'lag_param', 'stream_const', 'step', 'starttime', 'endtime'], 
-			values: [parameters['name'], "current_timestamp", parameters["data"]["rain"], lag_param, stream_const, step, "'"+string(start)+"'::timestamp", "'"+string(end)+"'::timestamp"]
+			values: [parameters['name'], "current_timestamp", map(parameters["data"])["rain"], lag_param, stream_const, step, "'"+string(start)+"'::timestamp", "'"+string(end)+"'::timestamp"]
 		);
 		list get_index <- select(params: db_param.contents, select: 'SELECT index, name, runtime FROM experiment_info ORDER BY runtime DESC LIMIT 3');
-		experiment_index <- int(get_index[2][0][0]);
+		experiment_index <- int(list(list(get_index[2])[0])[0]);
 		write 'experiment: ' + experiment_index;
 		ask catchment[0].sub_catch {
 			int catch_index <- catchment[0].sub_catch index_of self;
