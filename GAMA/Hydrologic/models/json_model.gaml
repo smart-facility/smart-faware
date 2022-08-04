@@ -4,7 +4,7 @@ import "./components/visualisation.gaml"
 
 global {	
 	file experiments <- folder('../../../data/experiments');
-	file parameters <- json_file(experiments.path+'/julyaug2020.json');
+	file parameters <- json_file(experiments.path+'/july22_mhl.json');
 	file db_param <- json_file(experiments.path+'/'+map(parameters['data'])['db']);
 	
 	date start <- date(map(parameters['run'])['start']);
@@ -17,6 +17,9 @@ global {
 	float stream_const <- float(map(parameters['flow'])['stream_const']);
 	
     geometry shape <- map(parameters['data'])['geom'] = 'db' ? envelope(db_param.contents): envelope(file(map(parameters['data'])['geom']));
+    
+    int experiment_index;    
+    map<int, string> upload_strings;
 	
 	init {
 		create cloud;
@@ -150,6 +153,14 @@ species catchment skills: [SQLSKILL] {
 			do drain_buffer;
 			in_flow <- 0.0;
 			//write out_flow/step;
+			
+			//int catch_index <- catchment[0].sub_catch index_of self;
+			string timestep <- "'"+string(current_date)+"'::timestamp";
+
+			upload_strings[id] <- upload_strings[id] + 'INSERT INTO experiment_data (index, timestep, catchment, rain_in, rain_buffer, storage, flow) VALUES
+ ('+experiment_index+','+timestep+','+id+','+rain_in/shape.area+','+rain_buffer+','+storage+','+out_flow/step+');';
+			
+			
 			if downstream != nil {
 				ask downstream {
 					self.in_flow <- self.in_flow + myself.out_flow;
@@ -180,8 +191,7 @@ experiment run {
 }
 
 experiment upload skills: [SQLSKILL] {
-	int experiment_index;
-	map<int, string> upload_strings;
+//	map<int, string> upload_strings;
 	init {
 		//date(machine_time/1000)-(date(0)-date('19700101'))+11#h
 		//string experiment_date <- string(current_date);
@@ -194,22 +204,22 @@ experiment upload skills: [SQLSKILL] {
 		write 'experiment: ' + experiment_index;
 		ask catchment[0].sub_catch {
 			int catch_index <- catchment[0].sub_catch index_of self;
-			myself.upload_strings[catch_index] <- '';
+			upload_strings[catch_index] <- '';
 		}
 	}
 	
-	reflex write {
-		string timestep <- "'"+string(current_date)+"'::timestamp";
-		ask catchment[0].sub_catch {
-			int catch_index <- catchment[0].sub_catch index_of self;
-			ask myself {
-				upload_strings[catch_index] <- upload_strings[catch_index] + 'INSERT INTO experiment_data 
-			(index, timestep, catchment, rain_in, rain_buffer, storage, flow) VALUES 
-			('+experiment_index+','+timestep+','+catch_index+','+myself.rain_in/myself.shape.area+','+myself.rain_buffer+','+myself.storage+','+myself.out_flow/step+');';
-			}
-			rain_in <- 0.0;
-		}
-	}
+//	reflex write {
+//		string timestep <- "'"+string(current_date)+"'::timestamp";
+//		ask catchment[0].sub_catch {
+//			int catch_index <- catchment[0].sub_catch index_of self;
+//			ask myself {
+//				upload_strings[catch_index] <- upload_strings[catch_index] + 'INSERT INTO experiment_data 
+//			(index, timestep, catchment, rain_in, rain_buffer, storage, flow) VALUES 
+//			('+experiment_index+','+timestep+','+catch_index+','+myself.rain_in/myself.shape.area+','+myself.rain_buffer+','+myself.storage+','+myself.out_flow/step+');';
+//			}
+//			rain_in <- 0.0;
+//		}
+//	}
 	
 	reflex uploader when: current_date > stopping_date {
 		ask catchment[0].sub_catch {
