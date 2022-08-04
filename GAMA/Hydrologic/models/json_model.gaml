@@ -206,10 +206,6 @@ experiment upload skills: [SQLSKILL] {
 				upload_strings[catch_index] <- upload_strings[catch_index] + 'INSERT INTO experiment_data 
 			(index, timestep, catchment, rain_in, rain_buffer, storage, flow) VALUES 
 			('+experiment_index+','+timestep+','+catch_index+','+myself.rain_in/myself.shape.area+','+myself.rain_buffer+','+myself.storage+','+myself.out_flow/step+');';
-//				do insert(params: db_param.contents, into: 'experiment_data',
-//					columns: ['index', 'timestep', 'catchment', 'rain_in', 'rain_buffer', 'storage', 'flow'],
-//					values: [experiment_index, timestep, catch_index, -1, myself.rain_buffer, myself.storage, myself.out_flow/step]
-//				);
 			}
 			rain_in <- 0.0;
 		}

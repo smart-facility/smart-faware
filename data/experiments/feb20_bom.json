@@ -1,5 +1,5 @@
 {
-    "name":"live",
+    "name":"rudy lag test",
     "flow":{
         "lag_param":1.61,
         "stream_const":0.6
@@ -7,12 +7,11 @@
     "run":{
         "step":300,
         "start":"20200207",
-        "end":"20200208"
+        "end":"20200210"
     },
     "data":{
         "db":"db.json",
-        "rain":"mhl",
-        "gauges": [568229, 568318],
+        "rain":"bom",
         "geom":"db",
         "output":"db"
     }

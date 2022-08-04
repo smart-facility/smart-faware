@@ -1,0 +1,19 @@
+{
+    "name":"live",
+    "flow":{
+        "lag_param":1.61,
+        "stream_const":0.6
+    },
+    "run":{
+        "step":300,
+        "start":"20220701",
+        "end":"20220704"
+    },
+    "data":{
+        "db":"db.json",
+        "rain":"bom",
+        "gauges": [568229, 568318],
+        "geom":"db",
+        "output":"db"
+    }
+}
